@@ -1,5 +1,4 @@
 ---
 title: "Raspberry-Pi-Bramble-Project"
-footer: "https://github.com/r-spiewak/rpi-bramble"
 ---
-Raspberry Pi Bramble project instructions and notes.
+Raspberry Pi Bramble project instructions and notes. See code (including that which generated this site) at [https://github.com/r-spiewak/rpi-bramble].
