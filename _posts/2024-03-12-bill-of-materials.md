@@ -3,8 +3,8 @@ title: "Bill of Materials"
 date: 2024-03-12
 ---
 We used the following materials for our project:
-1. 4 Raspberry Pis. We used whatever Raspberry Pi 4 Model B were available. Specifically:
-  1. 1 Raspberry Pi 4 Model B 2GB RAM
+1. 4 Raspberry Pis. We used whatever Raspberry Pi 4 Model B were available. Specifically:  
+  1. 1 Raspberry Pi 4 Model B 2GB RAM  
   2. 3 Raspberry Pi 4 Model B 1GB RAM
 2. 4 MicroCenter-brand Micro SD cards
 3. 1 [GeeekPi Cluster Stackable Case](https://www.amazon.com/GeeekPi-Cluster-Raspberry-Heatsink-Stackable/dp/B07MW3GM1T/ref=asc_df_B07MW24S61/?tag=&linkCode=df0&hvadid=343224652930&hvpos=&hvnetw=g&hvrand=8717861384181386006&hvpone=&hvptwo=&hvqmt=&hvdev=m&hvdvcmdl=&hvlocint=&hvlocphy=9007309&hvtargid=pla-782847829850&psc=1&mcid=e2bde0a25c9736469eede4b88c4b03bb&ref=&adgrpid=71764766791&gclid=CjwKCAiA8sauBhB3EiwAruTRJsvVJtcm1vU-5CcHYZK1L-XYRDXNXMBS5bqaVJXWCmo8VKoayOnU3BoCjX8QAvD_BwE&th=1)
