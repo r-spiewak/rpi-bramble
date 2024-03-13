@@ -17,6 +17,7 @@ Additions (to be added later):
 1. Two additional layers for the case (these may be 3D printed?):
    1. One layer to hold the SSD, to go directly underneath the pis.
    2. One layer at the bottom to hold the USB hub, to go under the SSD.
+   
 * These two layers should be designed such that the components they hold fit snugly (with maybe a little bit of room so the components have the tiniest bit of wiggle room), and with holes aligned for standoffs between each additional layer and (at least for the one holding the SSD) with the standoffs from the main case.
 
 Optional:
