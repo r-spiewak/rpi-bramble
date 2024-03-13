@@ -12,3 +12,12 @@ We used the following materials for our project (this is what we used; feel free
 5. 1 [USB Charging Dock](https://www.amazon.com/Charging-Durable-Station-Compatible-Samsung/dp/B08LL1SVZD/ref=pd_aw_fbt_m_sccl_1/136-8452093-6698707?pd_rd_w=UJbp7&content-id=amzn1.sym.6d90cd56-3eed-4d23-b409-a3b634cfdc4d&pf_rd_p=6d90cd56-3eed-4d23-b409-a3b634cfdc4d&pf_rd_r=N566BH338MTK9RCPK29B&pd_rd_wg=ZUbtR&pd_rd_r=2885ce35-a47a-4247-9976-b9dce4071541&pd_rd_i=B08LL1SVZD&psc=1&th=1)
 6. Extra M3 standoffs (we had leftover from a previous project).
 7. 1 [WD 1TB Portable External SSD](https://www.amazon.com/Portable-Passport-External-Warranty-WDBAGF0010BBL-WESN/dp/B08F21J716/ref=mp_s_a_1_5?crid=1XYAC2GW3LNSN&dib=eyJ2IjoiMSJ9.WeLfRF17Je8xniwyUAUNdNlqdWnitRFr5GZO68bPCF_Lxf1CDMIraB6FOygWBwzeqYc3qTCWB62wR6OexuOMhNfJiSouKrheh1_hmrRBGIZUFikN9v7HkgAXp4bZk4Vg1tZz4OdOpWjPfuPw_Rh-NCZ7gEaFPU2b5g8fI01yPR4dbmU9FkkEuR6JbrMswwn0xr4-ECz-nhZklhyfazPHvg.xoBoWjNG3uNQzb7Sv_7kwCfgiCPSMaKNpFWHN5mlSQs&dib_tag=se&keywords=wd+ssd+1tb+external&qid=1708101283&sprefix=wd+ssd+1tb+ext%2Caps%2C646&sr=8-5)
+
+Additions (to be added later):
+1. Two additional layers for the case (these may be 3D printed?):
+   1. One layer to hold the SSD, to go directly underneath the pis.
+   2. One layer at the bottom to hold the USB hub, to go under the SSD.
+  These two layers should be designed such that the components they hold fit snugly (with maybe a little bit of room so the components have the tiniest bit of wiggle room), and with holes aligned for standoffs between each additional layer and (at least for the one holding the SSD) with the standoffs from the main case.
+
+Optional:
+1. A pair of small (jeweler's) needle nose pliars could be useful for screwing in nuts and bolts, and standoffs. We didn't use them, but they would be useful to make sure everything is tight.
