@@ -14,5 +14,5 @@ defaults:
       path: ""
       type: "site_content"
     values:
-      layout: "default"
+      layout: "site_content"
 # permalink: /:categories/:year/:month/:day/:title:output_ext
