@@ -1,6 +1,7 @@
 ---
 title: "Assembly Instructions"
 date: 2024-03-12
+order: 2
 ---
 First, we attach the heat sinks to the pis. The GeeekPi Cluster Case comes with four heat sinks for each pi: a short small square, a tall small square, a large square, and a rectangle. All the heat sinks are aligned with the fins in the same direction, and can use the rectangle as a guide for that. With that in mind, the following directions are written with the orientation of the pi with the USB and ethernet ports on the right, facing right. The rectangle heat sink goes on the black rectangle component on the pi. The large square goes on the silver square component directly to the left of the rectangle. The short small square goes on the smaller black square component to the right of the rectangle, closer to the top of the board. The tall small square goes on the slightly larger black square component to the right of the rectangle, slightly closer to the bottom of the board.
 

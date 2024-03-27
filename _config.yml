@@ -6,7 +6,8 @@ collections:
     order:
       - 2024-03-12-bill-of-materials.md
       - 2024-03-12-assembly-instructions.md
-      - 2024-03-26-OS-setup.md 
+      - 2024-03-26-OS-setup.md
+    sort_by: order
 defaults:
   -
     scope: 

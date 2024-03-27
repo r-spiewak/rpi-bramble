@@ -9,5 +9,7 @@ Raspberry Pi Bramble project instructions and notes. See code (including that wh
       {{ page.title }}
     </a>
   </h2>
-  <!-- <p>{{ page.content | markdownify }}</p> -->
+  {% comment %}
+  <p>{{ page.content | markdownify }}</p>
+  {% endcomment %}
 {% endfor %}
