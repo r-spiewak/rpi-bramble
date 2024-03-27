@@ -9,3 +9,5 @@ Next, we primarily follow the instructions on the GeeekPi Cluster Case assembly.
 We assemble the pis such that the pi on top (with the exposed GPIO header pins) is the one with 2GB RAM. 
 
 We assembled the fans such that the label side of the fan is facing the pi it is intending to cool. When connecting the fan to the pi underneath it, connect the red (5V) wire to the top left GPIO pin header, and the black (GND) wire to the top third-from-left GPIO pin header.
+
+![image](../_post_images/IMG_20240312_232846890.jpg)
