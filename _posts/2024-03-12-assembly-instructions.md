@@ -10,7 +10,7 @@ We assemble the pis such that the pi on top (with the exposed GPIO header pins) 
 
 We assembled the fans such that the label side of the fan is facing the pi it is intending to cool. When connecting the fan to the pi underneath it, connect the red (5V) wire to the top left GPIO pin header, and the black (GND) wire to the top third-from-left GPIO pin header.
 
-[//]: # ![Assembled bramble housing with pis and fans:](assets/images/IMG_20240312_232846890.jpg)
+[//]: # ![Assembled bramble housing with pis and fans:](assets/images/IMG_20240312_232846890.jpg) (the first bit of this line basically makes it a comment, since it's creating a link object that is never actually called.)
 
 <img src="https://github.com/r-spiewak/rpi-bramble/blob/main/_posts/assets/images/IMG_20240312_232846890.jpg?raw=true">
  
