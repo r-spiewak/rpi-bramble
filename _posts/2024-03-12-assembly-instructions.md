@@ -12,5 +12,5 @@ We assembled the fans such that the label side of the fan is facing the pi it is
 
 [//]: # ![Assembled bramble housing with pis and fans:](assets/images/IMG_20240312_232846890.jpg)
 
-<img src="https://github.com/r-spiewak/rpi-bramble/blob/main/_posts/assets/images/IMG_20240312_232846890.jpg">
+<img src="https://github.com/r-spiewak/rpi-bramble/blob/main/_posts/assets/images/IMG_20240312_232846890.jpg?raw=true">
  
