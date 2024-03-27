@@ -7,3 +7,10 @@ collections:
       - 2024-03-12-bill-of-materials.md
       - 2024-03-12-assembly-instructions.md
       - 2024-03-26-OS-setup.md 
+defaults:
+  -
+    scope: 
+      path: ""
+      type: "site_content"
+    values:
+      layout: "default"
