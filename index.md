@@ -5,7 +5,7 @@ Raspberry Pi Bramble project instructions and notes. See code (including that wh
 
 {% for page in site.site_content %}
   <h2>
-    <a href="{{ page.url }}">
+    <a href="{{ site.baseurl }}{{ page.url }}">
       {{ page.title }}
     </a>
   </h2>
