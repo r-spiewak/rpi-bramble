@@ -2,6 +2,7 @@ theme: minima
 title: "Raspberry Pi Bramble Home"
 collections:
   posts:
+    output: true
     order:
       - 2024-03-12-bill-of-materials.md
       - 2024-03-12-assembly-instructions.md
