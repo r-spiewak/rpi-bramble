@@ -15,7 +15,7 @@ defaults:
       type: "site_content"
     values:
       layout: "site_content"
-# permalink: /:categories/:year/:month/:day/:title:output_ext
+
 sidebar:
   - bill-of-materials
   - assembly-instructions
@@ -24,3 +24,5 @@ sidebar:
   #   children: 
   #     - child-1-id
   #     - child-2-id
+
+# permalink: /:categories/:year/:month/:day/:title:output_ext
