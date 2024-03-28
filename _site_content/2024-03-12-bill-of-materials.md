@@ -2,6 +2,7 @@
 title: "Bill of Materials"
 date: 2024-03-12
 order: 1
+id: bill-of-materials
 ---
 We used the following materials for our project (this is what we used; feel free to substitute and/or purchase different products from different links; we do not receive profit of any sort from purchases made through these links, so choose products that work best for you):
 1. 4 Raspberry Pis. We used whatever Raspberry Pi 4 Model B were available. Specifically:  
