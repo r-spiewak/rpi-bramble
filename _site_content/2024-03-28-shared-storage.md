@@ -4,7 +4,7 @@ date: 2024-03-28
 order: 4
 id: shared-storage
 ---
-Steps in these instructions have been adapted from [this post]().
+Steps in these instructions have been adapted from [this post](https://glmdev.medium.com/building-a-raspberry-pi-cluster-784f0df9afbd).
 
 ## Setup the SSD on the Head Node
 
