@@ -96,6 +96,7 @@ sudo make install
 When running `make install`, some issues may arise with files or directories not existing or with permission errors. If a directory doesn't exist, create the directory with `sudo mkdir -p /clusterfs/dir-to-be-created` (and if the directory has `mung` in its name, change the ownership of those directories to `munge` with `sudo chown munge: /clusterfs/path-that-was-just-created/munge`) and run `make install` again.
 
 Note that these file permissions won't work for exfat type filesystems, and possibly also for other fuse-mounted filesystems (such as `sshfs`).
+
 <!-- 
 exFAT doesn't have file permissions... so I can't actually change the permissions on the exFat formatted drive. So either I have to reformat the drive (to something more friendly, like ext4, and then I can use NFS to mount it too, I guess), or I can't put anything on the drive that needs to have specific file permissions...
 
@@ -163,6 +164,7 @@ Then restart the sshd service with `sudo systemctl restart sshd.service`.
  - On compute nodes, because this needs to be run only after the shared drive is available (or else it will not be able to follow the links to the actual service file). 
  - On the head node, because there is nothing in the `munge.service` file preventing it from trying to start before the shared drive (with the installation) is actually mounted (in which case, the service will fail to load).
 
+{% comment %}
 <!--
 Maybe make a bash script to run on boot, check if shared drive is available, load shared drive, then start this and anything else?)
 The enable command results in the following:
@@ -171,6 +173,7 @@ Created symlink /etc/systemd/system/munge.service → /clusterfs/usr/lib/systemd
 Created symlink /etc/systemd/system/multi-user.target.wants/munge.service → /clusterfs/usr/lib/systemd/system/munge.service.
 ```
 -->
+{% endcomment %}
 
 For the compute nodes, since we already have a service and script to load the shared drive after the connection to the head node is available (from the previous instruction, [Shared Storage Setup](2024-03-28-shared-storage.md)), just add the following to the end of that script file:
 `sudo systemctl daemon-reload` (if not already there), and 
@@ -191,7 +194,7 @@ Then reboot the node (`sudo systemctl reboot`) and test munge.
 
 
 ## Some Munge Tests:
-The follwoing munge tests should all work, once the systemd service is running and the PATH links are set up:
+The following munge tests should all work, once the systemd service is running and the PATH links are set up:
  - `munge -n`
  - `munge -n |unmunge`
  - `munge -n | ssh node02 unmunge` (try between every pair of nodes)

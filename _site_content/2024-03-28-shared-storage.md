@@ -130,10 +130,12 @@ For the compute nodes, create the following [bash script](https://r-spiewak.gith
 ```
 (replace 10.0.0.1 with the correct IP address of the head node.)
 Make the script executable: `sudo chmod +x /scripts/mount-shared.sh`.
+
 Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble.service) (named `/lib/systemd/system/bramble.service`):
 ```
 {%- root_include /files/shared-storage/bramble.service -%}
 ```
+
 Then do `sudo systemctl daemon-reload`, and `sudo systemctl enable bramble.service`.
 Then test it by rebooting the node: `sudo systemctl reboot`.
 When the node comes back from rebooting, `ls /clusterfs` should produce the expected output.
