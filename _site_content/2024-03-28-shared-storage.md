@@ -50,7 +50,14 @@ tmpfs          tmpfs     185M     0  185M   0% /run/user/1000
 ```
 The last line there has what we require: `/dev/sda1` has Type `exfat`. Now unmount the drive with `sudo umount /clusterfs`, so we can remount it again automatically.
 
-Setup automatic mounting of the drive by including an entry in the `fstab` file. Add the entry `UUID=68AA-3B9B /clusterfs exfat defaults 0 2` to the file `/etc/fstab` using you favorite cli text editor (`nano` and `vi` are two popular choices). Remember to use `sudo` to be able to write out the file. Now reload the `fstab` file into the system with `sudo systemctl daemon-reload` and test the mounting with `sudo mount -a`. If it mounted successfully, the command `ls -a /clusterfs` should return results that are on the drive, for example:
+Note: here the drive format is `exfat`, which may pose some problems later on. For example, `exfat` cannot be exported via NFS, and `exfat` does not have separate file permissions (which will be necessary for a shared `munge` installation).
+To reformat the drive, after removing all information from the drive (since reformatting wipes the drive) perform the followign steps:
+ - `sudo umount /clusterfs` to make sure the drive is not mounted.
+ - `sudo lsblk` to double check the drive to be reformatted (overwriting the root `/` would be really bad...).
+ - `sudo mkfs.ext4 /dev/sda1` to reformat the drive to type `ext4` (if the drive was previously formatted, it may ask to verify that it should proceed despite the fact that there's already a filesystem on the drive; in that case, make sure everything is backed up and then select y to proceed).
+Now remount the drive, recheck the UUID of the drive using `sudo blkid` (this time, the result was `UUID="18eceed2-171e-4972-8b66-a09d24387f3c"`), and unmount the drive.
+
+Setup automatic mounting of the drive by including an entry in the `fstab` file. Add the entry `UUID=68AA-3B9B /clusterfs exfat defaults 0 2` (or, if the drive was reformatted, the entry `UUID=18eceed2-171e-4972-8b66-a09d24387f3c /clusterfs ext4 defaults 0 2`) to the file `/etc/fstab` using you favorite cli text editor (`nano` and `vi` are two popular choices). Remember to use `sudo` to be able to write out the file. Now reload the `fstab` file into the system with `sudo systemctl daemon-reload` and test the mounting with `sudo mount -a`. If it mounted successfully, the command `ls -a /clusterfs` should return results that are on the drive, for example:
 ```
  .    .Spotlight-V100  'Install Western Digital Software for Mac.dmg'
  ..   .Trashes         'Install Western Digital Software for Windows.exe'
@@ -68,7 +75,7 @@ Remember to edit the file with `sudo`.
 
 Now actually export the drive: `sudo exportfs -a`.
 
-However, if, like me, your drive is fromatted as `exfat`, NFS will not work to share it. In this case, you must either reformat the drive, or use a different sharing protocol (such as SMB or `sshfs`).
+However, if, like me, your drive is fromatted as `exfat`, NFS will not work to share it. In this case (or if NFS is not the desired protocol to use), either the drive must be reformatted, or a different sharing protocol (such as SMB or `sshfs`) must be used.
 
 ### Setup the Other Nodes to Access the Shared SSD
 
@@ -83,13 +90,15 @@ sudo chown nobody:nogroup -R /clusterfs
 sudo chmod 777 -R /clusterfs
 ```
 
-Setup automatic mounting of the drive by including an entry in the `fstab` file. Add the entry `10.0.0.1:/clusterfs /clusterfs nfs defaults 0 0` (replacing the IP address with the IP address of the Head node) to the file `/etc/fstab` using you favorite cli text editor (`nano` and `vi` are two popular choices). Remember to use `sudo` to be able to write out the file. Now reload the `fstab` file into the system with `sudo systemctl daemon-reload` and test the mounting with `sudo mount -a`. If it mounted successfully, the command `ls -a /clusterfs` should return results that are on the drive, for example:
+Setup automatic mounting of the drive by including an entry in the `fstab` file. Add the entry `10.0.0.1:/clusterfs /clusterfs nfs auto,_netdev,defaults 0 0` (replacing the IP address with the IP address of the Head node) to the file `/etc/fstab` using you favorite cli text editor (`nano` and `vi` are two popular choices). Remember to use `sudo` to be able to write out the file. Now reload the `fstab` file into the system with `sudo systemctl daemon-reload` and test the mounting with `sudo mount -a`. If it mounted successfully, the command `ls -a /clusterfs` should return results that are on the drive, for example:
 ```
  .    .Spotlight-V100  'Install Western Digital Software for Mac.dmg'
  ..   .Trashes         'Install Western Digital Software for Windows.exe'
 ```
 
 ## Setup Share via SSHFS
+
+Note that this method may not be sufficient for anything (such as `munge`) that requires different file premissions to function correctly. NFS may be a better option for those cases.
 
 Since the `ssh` connections between nodes was already established, all that is required is to install `sshfs` on the client nodes and add the entry to the `fstab` file.
 
@@ -109,3 +118,22 @@ Add the following entry to `/etc/fstab` (remember to use `sudo` when opening the
  ..   .Trashes         'Install Western Digital Software for Windows.exe'
 ```
 (If there are issues in the `fstab` file and and debugging is necessary, add the flag `sshfs_debug` to the list of flags, and then when mounting it, after the sshfs version appears, try to access the mounted directory from another terminal and watch for error messages in the first terminal.)
+
+## Post Setup
+
+For the current cluster setup, each node will come online at the same time, and it is likely that the mount on the head node will not be available when each compute node is ready for it and then the mount will fail. To counteract this situation, we should create a cron job or service on boot to check for the availability of the head node and then mount the shared drive (and then do `sudo systemctl daemon-reload` for any services that reside on the shared drive).
+
+The solution that worked for this particular case was the following:
+For the compute nodes, create the following [bash script](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/mount-shared.sh) (named `/scripts/mount-shared.sh`, and the directory `/scripts` must firt be created):
+```
+{%- root_include /files/shared-storage/mount-shared.sh -%}
+```
+(replace 10.0.0.1 with the correct IP address of the head node.)
+Make the script executable: `sudo chmod +x /scripts/mount-shared.sh`.
+Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble.service) (named `/lib/systemd/system/bramble.service`):
+```
+{%- root_include /files/shared-storage/bramble.service -%}
+```
+Then do `sudo systemctl daemon-reload`, and `sudo systemctl enable bramble.service`.
+Then test it by rebooting the node: `sudo systemctl reboot`.
+When the node comes back from rebooting, `ls /clusterfs` should produce the expected output.

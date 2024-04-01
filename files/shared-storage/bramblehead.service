@@ -1,0 +1,14 @@
+[Unit]
+Description=Bramble service to check and mount shared storage on head node
+Requires=clusterfs.mount
+After=clusterfs.mount
+#Before=munge.service
+
+[Service]
+Type=forking
+ExecStart=/scripts/bramble-head.sh
+RemainAfterExit=yes
+
+[Install]
+#RequiredBy=munge.service
+WantedBy=multi-user.target

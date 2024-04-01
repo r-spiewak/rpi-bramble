@@ -1,0 +1,22 @@
+[Unit]
+Description=Bramble service to check and mount shared storage
+Requires=network-online.target
+#Requires=nfs-common.service
+Requires=default.target
+After=network-online.target
+#After=nfs-common.service
+After=default.target
+#Before=munge.service
+
+[Service]
+#Type=oneshot
+Type=forking
+ExecStart=/scripts/mount-shared.sh
+RemainAfterExit=yes
+TimeoutSec=600
+#StandardOutput=journal
+#StandardError=journal
+
+[Install]
+#RequiredBy=munge.service
+WantedBy=multi-user.target
