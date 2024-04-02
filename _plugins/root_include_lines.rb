@@ -1,3 +1,5 @@
+# Usage {% root_include_lines <file/path/from/repo/root> <num_lines_to_skip_at_file_start> <number_of_lines_to_include> %}
+
 class RootIncludeLines < Liquid::Tag
     Syntax = /(#{Liquid::QuotedFragment}+)\s(\d+)\s(\d+)\s\z/o
     
