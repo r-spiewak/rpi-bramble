@@ -43,6 +43,7 @@ First, login to the head node (through `ssh`) and perform these operations on th
 
 #### Install Dependencies
 
+{% comment %}
 <!--
 Then, check that some of the dependencies are present:
 ```
@@ -52,6 +53,7 @@ bzip2 --version
 ```
 Each of these commands should return something other than `-bash: XXXX: command not found` if the dependency is present. If it's not present, install it (through package manager, or from source on the shared drive as we're doing here for munge).
 -->
+{% endcomment %}
 
 Install the dev version of bz2: `sudo apt-get install libbz2-dev`.
 
@@ -92,11 +94,14 @@ sudo make
 make check
 sudo make install
 ```
+%{ comment %}
 <!-- If there are any errors, you're on your own... I just ignored some errors. -->
+{% endcomment %}
 When running `make install`, some issues may arise with files or directories not existing or with permission errors. If a directory doesn't exist, create the directory with `sudo mkdir -p /clusterfs/dir-to-be-created` (and if the directory has `mung` in its name, change the ownership of those directories to `munge` with `sudo chown munge: /clusterfs/path-that-was-just-created/munge`) and run `make install` again.
 
 Note that these file permissions won't work for exfat type filesystems, and possibly also for other fuse-mounted filesystems (such as `sshfs`).
 
+{% comment %}
 <!-- 
 exFAT doesn't have file permissions... so I can't actually change the permissions on the exFat formatted drive. So either I have to reformat the drive (to something more friendly, like ext4, and then I can use NFS to mount it too, I guess), or I can't put anything on the drive that needs to have specific file permissions...
 
@@ -106,12 +111,15 @@ sudo src/mungekey/mungekey
 sudo chmod 755 /clusterfs/etc/munge/munge.key
 ```
 -->
+{% endcomment %}
 
 #### Link Munge Service Files
 
+{% comment %}
 <!--
 Can I install it on each node by running make install from each node? No. make install just installs it to the prefix dir from the configure script. But maybe I can symlink to the installation/add the bin dir to path? Or symlink the service to `/etc/systemd/system/munge.service`? It looks like the service was installed to `'/clusterfs/usr/lib/systemd/system/munge.service'`. Like `sudo ln -s /clusterfs/usr/lib/systemd/system/munge.service /lib/systemd/system/munge.service` (and then do a `sudo systemctl daemon-reload` so it knows about the service).
 -->
+{% endcomment %}
 
 For each node (both head and compute), link the `munge.service` file into the local directory:
 ```
@@ -128,9 +136,11 @@ and stop it with
 
 #### Add to PATH
 
+{% comment %}
 <!--
 Dirs to add to PATH? `/clusterfs/usr/bin/`, `/clusterfs/usr/sbin/` But where to add to path? Not in .bashrc, since that's only for logins, and we'd need to add for even when there's no login... Actually, that's not true, `/etc/bash.bashrc` is also for non login shells, so it should work! Actually, based on the comments in the `bash.bashrc` file, the edits should probably go in `/etc/profile`, since that seems to be what actually sets the PATH. Specifically, i
 -->
+{% endcomment %}
 In the `/etc/profile` file (towards the beginning of the file on mine), there is a place where it actually sets the PATH variable:
 ```
 if [ "$(id -u)" -eq 0 ]; then
@@ -203,10 +213,11 @@ The following munge tests should all work, once the systemd service is running a
  - `ssh node02 munge -n | unmunge` (try between every pair of nodes)
  - `remunge`
 
-
+{% comment %}
 <!--
 `/clusterfs/usr/bin/munge -n -S /run/munge/munge.socket.2 |/clusterfs/usr/bin/unmunge -S /run/munge/munge.socket.2`
 -->
+{% endcomment %}
 
 ## Appendix
 
@@ -228,6 +239,7 @@ flag during linking and do at least one of the following:
 ```
 `PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /clusterfs/usr/lib`
 
+{% comment %}
 <!--
 Is this what's used in the tests to run?
 /clusterfs/scratch/munge-0.5.16/src/etc/munge.systemd.service
@@ -242,3 +254,4 @@ ExecStart=/clusterfs/usr/sbin/munged --socket=/run/munge/munge.socket.2 $OPTIONS
 
 `sudo systemctl unmask nfs-common.service`
 -->
+{% endcomment %}
