@@ -1,3 +1,5 @@
+# From https://stackoverflow.com/a/75420946
+
 class RootInclude < Liquid::Tag
     def initialize(_tag_name, markup, _parse_context)
       super
