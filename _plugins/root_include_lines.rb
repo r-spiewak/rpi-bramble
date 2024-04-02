@@ -22,7 +22,8 @@ class RootIncludeLines < Liquid::Tag
       lines = read_file(final_path, context)
       #lines = IO.readlines(context.evaluate(@file))
       part = lines.drop(@startline)
-      part.take(@endline - @startline)
+      #part.take(@endline - @startline)
+      part.take(@endline)
     end
   
     def read_file(path, context)
