@@ -128,12 +128,18 @@ For the compute nodes, create the following [bash script](https://r-spiewak.gith
 {% highlight bash %}
 {%- root_include_lines /files/shared-storage/mount-shared.sh 0 8 -%}
 {% endhighlight %}
-(Replace 10.0.0.1 with the correct IP address of the head node. Also ignore, for now, the additional services started at the end of the script.)
+(Replace 10.0.0.1 with the correct IP address of the head node.{% comment %} Also ignore, for now, the additional services started at the end of the script.{% endcomment %})
 Make the script executable: `sudo chmod +x /scripts/mount-shared.sh`.
 
 Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble.service) (named `/lib/systemd/system/bramble.service`): 
 {% highlight bash %}
-{%- root_include /files/shared-storage/bramble.service -%}
+{%- root_include_lines /files/shared-storage/bramble.service 0 3 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 4 2 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 7 1 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 10 2 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 13 4 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 18 2 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 21 1 -%}
 {% endhighlight %}
 Then do `sudo systemctl daemon-reload`, and `sudo systemctl enable bramble.service`.
 Then test it by rebooting the node: `sudo systemctl reboot`.
