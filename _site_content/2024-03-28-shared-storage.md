@@ -133,7 +133,7 @@ Make the script executable: `sudo chmod +x /scripts/mount-shared.sh`.
 
 Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble.service) (named `/lib/systemd/system/bramble.service`): 
 
-```bash 
+```desktop 
 {%- root_include /files/shared-storage/bramble.service -%}
 ```
 Then do `sudo systemctl daemon-reload`, and `sudo systemctl enable bramble.service`.
