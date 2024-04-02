@@ -126,16 +126,17 @@ For the current cluster setup, each node will come online at the same time, and 
 The solution that worked for this particular case was the following:
 For the compute nodes, create the following [bash script](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/mount-shared.sh) (named `/scripts/mount-shared.sh`, and the directory `/scripts` must firt be created):
 ```
-# mount-shared.sh
+# mount-shared.sh 
 {%- root_include /files/shared-storage/mount-shared.sh -%}
 
 ```
 (Replace 10.0.0.1 with the correct IP address of the head node. Also ignore, for now, the additional services started at the end of the script.)
 Make the script executable: `sudo chmod +x /scripts/mount-shared.sh`.
 
-Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble.service) (named `/lib/systemd/system/bramble.service`):
+Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble.service) (named `/lib/systemd/system/bramble.service`): 
+
 ```
-# bramble.service
+# bramble.service 
 {%- root_include /files/shared-storage/bramble.service -%}
 
 ```
