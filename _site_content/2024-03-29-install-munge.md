@@ -181,15 +181,15 @@ For the compute nodes, since we already have a service and script to load the sh
 Then reboot the node (`sudo systemctl reboot`) and test munge.
 
 For the head node, create the following [systemd service](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramblehead.service) (named `/lib/systemd/system/bramblehead.service`):
-```
-~~~
-{%- root_include /files/shared-storage/bramblehead.service -%}
-~~~
-```
+{% highlight bash %}
+{%- root_include_lines /files/shared-storage/bramblehead.service 0 4 -%}
+{%- root_include_lines /files/shared-storage/bramblehead.service 5 7 -%}
+{%- root_include_lines /files/shared-storage/bramblehead.service 13 1 -%}
+{% endhighlight %}
 Also create the following [daemon-reload script](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/bramble-head.sh):
-```
-{%- root_include /files/shared-storage/bramble-head.sh -%}
-```
+{% highlight bash %}
+{%- root_include_lines /files/shared-storage/bramble-head.sh 0 4 -%}
+{% endhighlight %}
 Then make it executable: `sudo chmod +x /scripts/bramble-head.sh`.
 Then do `sudo systemctl daemon-reload`, and `sudo systemctl enable bramblehead.service`. 
 Then reboot the node (`sudo systemctl reboot`) and test munge.
