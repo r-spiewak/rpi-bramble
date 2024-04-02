@@ -25,7 +25,7 @@ class RootIncludeLines < Liquid::Tag
   
     def read_file(path, context)
       file_read_opts = context.registers[:site].file_read_opts
-      File.read(path, **file_read_opts)
+      File.readlines(path, **file_read_opts)
     end
   end
   
