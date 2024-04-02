@@ -94,7 +94,7 @@ sudo make
 make check
 sudo make install
 ```
-%{ comment %}
+{% comment %}
 <!-- If there are any errors, you're on your own... I just ignored some errors. -->
 {% endcomment %}
 When running `make install`, some issues may arise with files or directories not existing or with permission errors. If a directory doesn't exist, create the directory with `sudo mkdir -p /clusterfs/dir-to-be-created` (and if the directory has `mung` in its name, change the ownership of those directories to `munge` with `sudo chown munge: /clusterfs/path-that-was-just-created/munge`) and run `make install` again.
