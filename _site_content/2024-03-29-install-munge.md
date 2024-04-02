@@ -39,6 +39,8 @@ This munge key then needs to be shared amongst all the nodes (via `scp` or the l
 
 ### Through Build From Source
 
+The basis of these steps can be found in [the official munge build instructions](https://github.com/dun/munge/blob/master/QUICKSTART).
+
 First, login to the head node (through `ssh`) and perform these operations on that node (unless otherwise specified).
 
 #### Install Dependencies
