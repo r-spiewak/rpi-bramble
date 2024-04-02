@@ -136,8 +136,8 @@ Then, create the following [systemd service](https://r-spiewak.github.io/rpi-bra
 {%- root_include_lines /files/shared-storage/bramble.service 0 3 -%}
 {%- root_include_lines /files/shared-storage/bramble.service 4 2 -%}
 {%- root_include_lines /files/shared-storage/bramble.service 7 1 -%}
-{%- root_include_lines /files/shared-storage/bramble.service 10 2 -%}
-{%- root_include_lines /files/shared-storage/bramble.service 13 4 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 9 2 -%}
+{%- root_include_lines /files/shared-storage/bramble.service 12 4 -%}
 {%- root_include_lines /files/shared-storage/bramble.service 18 2 -%}
 {%- root_include_lines /files/shared-storage/bramble.service 21 1 -%}
 {% endhighlight %}
