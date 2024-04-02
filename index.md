@@ -3,56 +3,7 @@ title: "Raspberry Pi Bramble Project"
 #layout: "site_content"
 layout: default
 ---
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ page.title | default: site.title }}</title>
-    <style>
-        body {
-            font-family: "Lato", sans-serif;
-        }
 
-        .sidenav {
-            width: 130px;
-            position: fixed;
-            z-index: 1;
-            top: 20px;
-            left: 10px;
-            background: #eee;
-            overflow-x: hidden;
-            padding: 8px 0;
-        }
-
-        .sidenav a {
-            padding: 6px 8px 6px 16px;
-            text-decoration: none;
-            font-size: 25px;
-            color: #2196F3;
-            display: block;
-        }
-
-        .sidenav a:hover {
-            color: #064579;
-        }
-
-        .main {
-            margin-left: 140px;
-            /* Same width as the sidebar + left position in px */
-            font-size: 14px;
-            /* Increased text to enable scrolling */
-            padding: 0px 10px;
-        }
-
-        @media screen and (max-height: 450px) {
-            .sidenav {
-                padding-top: 15px;
-            }
-
-            .sidenav a {
-                font-size: 18px;
-            }
-        }
-    </style>
-</head>
 Raspberry Pi Bramble project instructions and notes. See code (including that which generated this site) at [https://github.com/r-spiewak/rpi-bramble](https://github.com/r-spiewak/rpi-bramble).
 
 {% assign sorted_content = site.site_content | sort: "order" %}
