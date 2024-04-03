@@ -7,6 +7,7 @@ collections:
       - 2024-03-12-bill-of-materials.md
       - 2024-03-12-assembly-instructions.md
       - 2024-03-26-OS-setup.md
+      - 2024_03_29-install-munge.md
     sort_by: order
 defaults:
   -
@@ -20,6 +21,8 @@ sidebar:
   - bill-of-materials
   - assembly-instructions
   - os-setup
+  - shared-storage
+  - install-munge
   # - label: Menu Item with SubItems
   #   children: 
   #     - child-1-id
