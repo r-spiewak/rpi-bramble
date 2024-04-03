@@ -3,8 +3,8 @@ This file copied and modified from
 https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sidebar.html
 {% endcomment %}
 
-<div class="sidebar">
-  {% for item in site.sidenav %}
+<div class="sidenav">
+  {% for item in site.sidebar %}
     {% if item.children %}
       {% capture id %}sidebar_item:{{ item.label | strip | downcase | remove: "'" | remove: '"' | escape }}{% endcapture %}
       {% capture accordian_id %}{{ id }}:accordian{% endcapture %}
