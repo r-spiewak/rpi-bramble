@@ -14,7 +14,7 @@ We must create the home directory on the shared drive (this only must be done on
 sudo mkdir -p -m777 /clusterfs/var/lib
 ```
 
-Then, on each nodecreate the group and user:
+Then, on each node create the group and user:
 ```
 export MUNGEUSER=1002
 sudo groupadd -g $MUNGEUSER munge
@@ -57,9 +57,9 @@ Each of these commands should return something other than `-bash: XXXX: command 
 -->
 {% endcomment %}
 
-Install the dev version of bz2: `sudo apt-get install libbz2-dev`.
-
-Install the dev version of openssl: `sudo apt-get install libssl-dev`.
+The following dependencies are required to build munge, but not run munge (so only need to be installed on the head node that is building munge):
+ - Install the dev version of bz2: `sudo apt-get install libbz2-dev`.
+ - Install the dev version of openssl: `sudo apt-get install libssl-dev`.
 
 Create the following directories on the shared drive for munge:
 ```
