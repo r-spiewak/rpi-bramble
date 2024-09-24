@@ -16,3 +16,12 @@ We assembled the fans such that the label side of the fan is facing the pi it is
 
 <img src="https://github.com/r-spiewak/rpi-bramble/blob/main/_site_content/assets/images/IMG_20240312_232846890.jpg?raw=true">
  
+Next, we place the SSD on its 3D printed holder plate, and use standoffs to attach the bottom of the GeeekPi Cluster Case assembly to it. We align it such that the port to the SSD faces outwards to the opening, and is on the same side of the assembly as the ethernet ports on the pis.
+
+Similarly, we place the USB Power hub on the 3D printed holder plate to hold it, and use standoffs (and extra M3 Acorn Nuts) to attach the plate to the plate above. We align it such that the USB ports on the hub are on the same side of the assembly as the USB-c ports (and mini HDMI ports) of the pis.
+
+Finally, we place the ethernet port switch on the 3D printed holder plate to hold it, and use standoffs (and screws for the bottom) to attach it to the plate above. We align it such that the ethernet ports on the port switch are on the opposite side of the cluster assembly as the USB ports on the power hub.
+
+{% comment %}
+Add image of completed assembly, like above?
+{% endcomment %}
