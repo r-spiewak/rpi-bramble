@@ -5,6 +5,9 @@ order: 7
 id: install-ncurses
 ---
 
+{% comment %}
+`sudo apt-get install libncurses-dev`
+{% endcomment %}
 
 On the head node, first get the most recent release (at this time, it seems to be 6.4):
 ```
