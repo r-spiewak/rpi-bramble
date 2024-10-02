@@ -172,7 +172,7 @@ If you ever have to reboot a node without doing it through slurm, run the follow
 ```
 sudo /clusterfs/usr/bin/scontrol update state=resume NodeName=<node's hostname>
 ```
-The proper way to reboot a node is with `scontrol reboot <node's hostname>` (or `ALL`, or a list `<NodeList>`), and then ??? (assuming the `RebootProgram` is set in the `slurm.conf`).
+The proper way to reboot a node is with `scontrol reboot_nodes <node's hostname>` (or `ALL`, or a list `<NodeList>`, and assuming the `RebootProgram` is set in the `slurm.conf`).
 
 ## Appendix
 
