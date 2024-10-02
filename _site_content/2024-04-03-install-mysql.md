@@ -1,7 +1,7 @@
 ---
 title: "MySQL Installation"
 date: 2024-04-03
-order: 8
+order: 9
 id: install-mysql
 ---
 

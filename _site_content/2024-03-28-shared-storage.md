@@ -1,7 +1,7 @@
 ---
 title: "Shared Storage Setup"
 date: 2024-03-28
-order: 4
+order: 5
 id: shared-storage
 ---
 Steps in these instructions have been adapted from [this post](https://glmdev.medium.com/building-a-raspberry-pi-cluster-784f0df9afbd).
@@ -124,7 +124,7 @@ Add the following entry to `/etc/fstab` (remember to use `sudo` when opening the
 For the current cluster setup, each node will come online at the same time, and it is likely that the mount on the head node will not be available when each compute node is ready for it and then the mount will fail. To counteract this situation, we should create a cron job or service on boot to check for the availability of the head node and then mount the shared drive (and then do `sudo systemctl daemon-reload` for any services that reside on the shared drive).
 
 The solution that worked for this particular case was the following:
-For the compute nodes, create the following [bash script](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/mount-shared.sh) (named `/scripts/mount-shared.sh`, and the directory `/scripts` must firt be created):
+For the compute nodes, create the following [bash script](https://r-spiewak.github.io/rpi-bramble/files/shared-storage/mount-shared.sh) (named `/scripts/mount-shared.sh`, and the directory `/scripts` must first be created):
 {% highlight bash %}
 {%- root_include_lines /files/shared-storage/mount-shared.sh 0 8 -%}
 {% endhighlight %}

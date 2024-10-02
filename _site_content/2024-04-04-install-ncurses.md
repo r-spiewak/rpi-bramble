@@ -1,7 +1,7 @@
 ---
 title: "Ncurses Installation"
 date: 2024-04-04
-order: 7
+order: 8
 id: install-ncurses
 ---
 

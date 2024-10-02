@@ -1,7 +1,7 @@
 ---
 title: "Munge Installation"
 date: 2024-03-29
-order: 5
+order: 6
 id: install-munge
 ---
 

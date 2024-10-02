@@ -7,3 +7,5 @@ done
 sudo mount -a
 sudo systemctl daemon-reload
 sudo systemctl start munge.service
+sudo systemctl start mysql.service
+sudo systemctl start slurmd
