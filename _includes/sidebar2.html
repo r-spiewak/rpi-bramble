@@ -31,7 +31,8 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
       <div id="{{ accordion_id }}"
         class="sidebar_item_accordion sidebar_item_accordion_{{ collapsibleClass }}">
         {% for child in item.children %}
-          {% assign meta = site.pages | where: "id", child | first %}
+          <!-- {% assign meta = site.pages | where: "id", child | first %} -->
+          {% assign meta = site.site_content | where: "id", child | first %}
           {% if meta %}
           {% if page.id == meta.id %}
             {% assign active_class = "active_sidebar_item" %}
@@ -45,7 +46,8 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
         {% endfor %}
       </div>
     {% else %}
-      {% assign meta = site.pages | where: "id", item | first %}
+      <!-- {% assign meta = site.pages | where: "id", item | first %} -->
+      {% assign meta = site.site_content | where: "id", item | first %}
       {% if meta %}
       {% if page.id == meta.id %}
         {% assign active_class = "active_sidebar_item" %}

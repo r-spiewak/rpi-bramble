@@ -21,13 +21,13 @@ sidebar:
   - label: "Steps"
     children:
       - bill-of-materials
-      # - assembly-instructions
-      # - os-setup
-      # - shared-storage
-      # - install-munge
-      # - install-libaio
-      # - install-ncurses
-      # - install-mysql
+      - assembly-instructions
+      - os-setup
+      - shared-storage
+      - install-munge
+      - install-libaio
+      - install-ncurses
+      - install-mysql
   # - label: Menu Item with SubItems
   #   children: 
   #     - child-1-id
