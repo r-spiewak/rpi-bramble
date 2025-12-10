@@ -32,6 +32,7 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
       DEBUG item.children: {{ item.children | join: ", " }}
       <div id="{{ accordion_id }}"
         class="sidebar_item_accordion sidebar_item_accordion_{{ collapsibleClass }}">
+        <p style="color:red;">Inside include: item.children = {{ item.children | jsonify }}</p>
         {% for child in item.children %}
           <!-- {% assign meta = site.pages | where: "id", child | first %} -->
           {% assign meta = site.site_content | where: "id", child | first %}
@@ -41,6 +42,10 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
           {% else %}
             {% assign active_class = "" %}
           {% endif %}
+          <p>meta.url = {{ meta.url }}</p>
+          <p style="color:green;">
+            child={{ child }} meta.id={{ meta.id }} meta.url={{ meta.url }} meta.title={{ meta.title }}
+          </p>
           <a href="{{ meta.url | relative_url }}" class="sidebar_item text-sm {{ active_class }} sidebar_item_child">
             {{ meta.sidebar_label | default: meta.title }}
           </a>
