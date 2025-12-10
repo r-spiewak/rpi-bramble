@@ -29,6 +29,7 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
       <!-- <div id="{{ accordian_id }}" 
         class="sidebar_item_accordian sidebar_item_accordian_{{ collapsibleClass }}">-->
       DEBUG site.site_content IDs: {{ site.site_content | map: "id" | join: ", " }}
+      DEBUG item.children: {{ item.children | join: ", " }}
       <div id="{{ accordion_id }}"
         class="sidebar_item_accordion sidebar_item_accordion_{{ collapsibleClass }}">
         {% for child in item.children %}
