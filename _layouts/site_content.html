@@ -52,7 +52,30 @@ layout: default
                 font-size: 18px;
             }
         }
+
+        .sidebar_item_accordian.expanded {
+            display: block;
+        }
+
+        .sidebar_item_accordian.collapsed {
+            display: none;
+        }
+
     </style>
+    <script>
+        function toggleAccordion(id) {
+            const accordion = document.getElementById(id + "_accordion");
+            const button = document.getElementById(id);
+
+            if (!accordion) return;
+
+            accordion.classList.toggle("expanded");
+            accordion.classList.toggle("collapsed");
+            button.classList.toggle("expanded");
+            button.classList.toggle("collapsed");
+        }
+    </script>
+
 </head>
 
 <!--
