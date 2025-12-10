@@ -45,9 +45,9 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
               child={{ child | jsonify }}, 
               site.site_content IDs: {{ site.site_content | map: "doc.data.id" | strip | downcase }}
             </p>
-            <!-- {% if doc.data.id == child %} -->
             {% assign doc_id = doc.data.id | strip | downcase %}
             {% assign child_id = child | strip | downcase %}
+            <!-- {% if doc.data.id == child %} -->
             {% if doc_id == child_id %}
               {% assign meta = doc %}
               {% break %}
