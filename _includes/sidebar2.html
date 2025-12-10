@@ -6,15 +6,22 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
 <div class="sidenav">
   {% for item in site.sidebar %}
     {% if item.children %}
-      {% capture id %}sidebar_item:{{ item.label | strip | downcase | remove: "'" | remove: '"' | escape }}{% endcapture %}
-      {% capture accordian_id %}{{ id }}:accordian{% endcapture %}
+      <!-- {% capture id %}sidebar_item:{{ item.label | strip | downcase | remove: "'" | remove: '"' | escape }}{% endcapture %} -->
+      {% capture id %}sidebar_item_{{ item.label | strip | downcase | remove: "'" | remove: '"' | replace: " ", "_" }}{% endcapture %}
+      <!-- {% capture accordian_id %}{{ id }}:accordian{% endcapture %} -->
+      {% capture accordion_id %}{{ id }}_accordion{% endcapture %}
       {% capture collapsibleClass %}
       {%- if item.children contains page.id -%}expanded{%- else -%}collapsed{%- endif -%}
       {% endcapture %}
-      <button
+      <!-- <button
         id="{{ id }}"
         class="sidebar_item sidebar_item_collapsible sidebar_item_{{ collapsibleClass }}"
         onclick="toggleAccordian('{{ id }}')"
+      > -->
+      <button
+        id="{{ id }}"
+        class="sidebar_item sidebar_item_collapsible sidebar_item_{{ collapsibleClass }}"
+        onclick="toggleAccordion('{{ id }}')"
       >
         <span class="sidebar_item_text">{{ item.label }}</span>
         {% include collapsible_sidebar_icon.html %}
