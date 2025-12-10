@@ -47,7 +47,7 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
             </p>
             {% assign doc_id = doc.data.id | strip | downcase %}
             {% assign child_id = child | strip | downcase %}
-            <!-- {% if doc.data.id == child %} -->
+            <!-- {% if doc.data.id == child %} --> <!-- {% ednif %}-->
             {% if doc_id == child_id %}
               {% assign meta = doc %}
               {% break %}
