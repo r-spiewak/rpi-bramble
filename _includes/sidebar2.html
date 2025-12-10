@@ -39,7 +39,7 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
           <!-- {% assign meta = site.site_content | where: "id", child | first %} -->
           {% assign meta = nil %}
           {% for doc in site.site_content %}
-            {% if doc.id == child %}
+            {% if doc.data.id == child %}
               {% assign meta = doc %}
               {% break %}
             {% endif %}
