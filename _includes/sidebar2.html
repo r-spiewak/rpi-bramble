@@ -34,6 +34,7 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
         class="sidebar_item_accordion sidebar_item_accordion_{{ collapsibleClass }}">
         <p style="color:red;">Inside include: item.children = {{ item.children | jsonify }}</p>
         {% for child in item.children %}
+          <p style="color:blue;">Inside child {{ child }}</p>
           <!-- {% assign meta = site.pages | where: "id", child | first %} -->
           {% assign meta = site.site_content | where: "id", child | first %}
           {% if meta %}
