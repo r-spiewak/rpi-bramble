@@ -28,15 +28,22 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
       </button>
       <!-- <div id="{{ accordian_id }}" 
         class="sidebar_item_accordian sidebar_item_accordian_{{ collapsibleClass }}">-->
-      DEBUG site.site_content IDs: {{ site.site_content | map: "id" | join: ", " }}
-      DEBUG item.children: {{ item.children | join: ", " }}
+      <!-- DEBUG site.site_content IDs: {{ site.site_content | map: "id" | join: ", " }}
+      DEBUG item.children: {{ item.children | join: ", " }} -->
       <div id="{{ accordion_id }}"
         class="sidebar_item_accordion sidebar_item_accordion_{{ collapsibleClass }}">
-        <p style="color:red;">Inside include: item.children = {{ item.children | jsonify }}</p>
+        <!-- <p style="color:red;">Inside include: item.children = {{ item.children | jsonify }}</p> -->
         {% for child in item.children %}
-          <p style="color:blue;">Inside child {{ child }}</p>
+          <!-- <p style="color:blue;">Inside child {{ child }}</p> -->
           <!-- {% assign meta = site.pages | where: "id", child | first %} -->
-          {% assign meta = site.site_content | where: "id", child | first %}
+          <!-- {% assign meta = site.site_content | where: "id", child | first %} -->
+          {% assign meta = nil %}
+          {% for doc in site.site_content %}
+            {% if doc.id == child %}
+              {% assign meta = doc %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
           <p style="color:blueviolet">Meta: {{ meta }}</p>
           {% if meta %}
             {% if page.id == meta.id %}
