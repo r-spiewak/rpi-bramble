@@ -62,20 +62,6 @@ layout: default
         }
 
     </style>
-    <script>
-        function toggleAccordion(id) {
-            const accordion = document.getElementById(id + "_accordion");
-            const button = document.getElementById(id);
-
-            if (!accordion) return;
-
-            accordion.classList.toggle("expanded");
-            accordion.classList.toggle("collapsed");
-            button.classList.toggle("expanded");
-            button.classList.toggle("collapsed");
-        }
-    </script>
-
 </head>
 
 <!--
@@ -104,6 +90,27 @@ layout: default
         <h1>{{ page.title }}</h1>
         {{ page.content }}
     </div>
+    <script>
+        function toggleAccordion(id) {
+            console.log("toggleAccordion called with:", id);
+            const accordion = document.getElementById(id + "_accordion");
+            const button = document.getElementById(id);
+            console.log("button found:", !!button, "accordion found:", !!accordion);
+
+            if (!accordion) {
+                console.warn("Accordion element not found:", accordionId);
+                return;
+            }
+
+            accordion.classList.toggle("expanded");
+            accordion.classList.toggle("collapsed");
+
+            if (button) {
+                button.classList.toggle("expanded");
+                button.classList.toggle("collapsed");
+            }
+        }
+    </script>
 </body>
 
 </html>
