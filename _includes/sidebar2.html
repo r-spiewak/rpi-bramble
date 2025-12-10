@@ -41,7 +41,7 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
           {% for doc in site.site_content %}
             <p style="color:orange;">
               child={{ child | jsonify }}, 
-              site.site_content IDs: {{ site.site_content | map: "data.id" | jsonify }}
+              site.site_content IDs: {{ site.site_content | map: "doc.data.id" | jsonify }}
             </p>
             {% if doc.data.id == child %}
               {% assign meta = doc %}
