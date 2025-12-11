@@ -43,8 +43,8 @@ https://github.com/zendesk/jekyll-theme-zendesk-garden/blob/main/_includes/sideb
             <!-- <p style="color:purple;">doc.data={{ doc.data | jsonify }}</p> -->
             <p style="color:orange;">
               child={{ child | jsonify }}, 
-              <!-- site.site_content IDs: {{ site.site_content | map: "doc.data.id" | strip | downcase }} -->
-               site.site_content IDs: {{ doc | map: "doc.data.id" | strip | downcase }}
+              site.site_content IDs: {{ site.site_content | map: "doc.data.id" | strip | downcase }}
+               <!-- site.site_content IDs: {{ doc | map: "doc.data.id" | strip | downcase }} -->
             </p>
             <!-- {% assign doc_id = doc.data.id | strip | downcase %}
             {% assign child_id = child | strip | downcase %} 
