@@ -1,0 +1,8 @@
+# Built site
+_site
+
+**/*.DS_Store
+
+
+notes
+TODO.md
