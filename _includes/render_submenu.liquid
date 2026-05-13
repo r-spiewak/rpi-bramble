@@ -30,9 +30,11 @@
             {# 2. Check for children and if we haven't hit max depth #}
             {% if item.children and item.children.size > 0 and level < max_depth %}
                 {# 3. The recursive step: INCLUDE the partial again, passing the children data #}
+                {% assign children = item.children %}
+                {% assign next_level = level + 1 %}
                 {% include render_submenu.liquid
-                  items=item.children
-                  level={{level + 1}}
+                  items=children
+                  level=next_level
                   max_depth=max_depth 
                 %}
             {% endif %}
