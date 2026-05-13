@@ -4,8 +4,7 @@
     
     {% comment %} Initial call to the recursive partial {% endcomment %}
     {% include render_submenu.liquid
-        key='items'
-        value=sidebar_items
+        items=sidebar_items
         level=1
         max_depth=4 
     %}

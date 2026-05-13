@@ -6,7 +6,6 @@
 
 {% comment %}
   Inputs:
-  - key: 'items'
   - items: The list of items (either the main sidebar or the 'children' list).
   - level: The current depth level.
   - max_depth: The maximum depth allowed.
@@ -32,8 +31,7 @@
             {% if item.children and item.children.size > 0 and level < max_depth %}
                 {# 3. The recursive step: INCLUDE the partial again, passing the children data #}
                 {% include render_submenu.liquid
-                  key='items'
-                  value=item.children
+                  items=item.children
                   level={{level + 1}}
                   max_depth=max_depth 
                 %}
