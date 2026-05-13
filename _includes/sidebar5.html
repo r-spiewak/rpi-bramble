@@ -3,9 +3,9 @@
     {% assign sidebar_items = site.sidebar %}
     
     {% comment %} Initial call to the recursive partial {% endcomment %}
-    {% include render_submenu.liquid,
-        items: sidebar_items,
-        level: 1,
-        max_depth: 4 
+    {% include 'render_submenu.liquid'
+        items=sidebar_items
+        level=1
+        max_depth=4 
     %}
 </div>
