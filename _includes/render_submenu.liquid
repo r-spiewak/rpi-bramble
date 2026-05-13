@@ -12,26 +12,28 @@
 {% endcomment %}
 
 {% if items == blank %}
-    {# Exit if there are no items to render #}
+    {% comment %} Exit if there are no items to render {% endcomment %}
 {% else %}
     <ul class="submenu level-{{ level }}">
     {% for item in items %}
         {% assign label = item.label %}
         {% assign url = item.url | default: 'path-to-page.html' %}
         
-        {# 1. Render the current item link #}
+        {% comment %} 1. Render the current item link {% endcomment %}
         <li>
             {% if item.url %}
+                <p style="color:green;">{{ label }}{{ url }}</p>
                 <a href="{{ url }}" class="sidebar-item level-{{ level }}">{{ label }}</a>
             {% else %}
                 <p style="color:orange;">{{ label }}</p>
             {% endif %}
             
-            {# 2. Check for children and if we haven't hit max depth #}
+            {$ comment %} 2. Check for children and if we haven't hit max depth {% endcomment %}
             {% if item.children and item.children.size > 0 and level < max_depth %}
-                {# 3. The recursive step: INCLUDE the partial again, passing the children data #}
+                {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
                 {% assign children = item.children %}
                 {% assign next_level = level + 1 %}
+                <p style="color:blue;">{{ label }} has children. Going to level {{ next_level }}</p>
                 {% include render_submenu.liquid
                   items=children
                   level=next_level
