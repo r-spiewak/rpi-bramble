@@ -28,7 +28,7 @@
                 <p style="color:orange;">{{ label }}</p>
             {% endif %}
             
-            {$ comment %} 2. Check for children and if we haven't hit max depth {% endcomment %}
+            {% comment %} 2. Check for children and if we haven't hit max depth {% endcomment %}
             {% if item.children and item.children.size > 0 and level < max_depth %}
                 {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
                 {% assign children = item.children %}
