@@ -1,0 +1,12 @@
+<div class="sidenav">
+    {% comment %} Start the top-level UL that contains all items {% endcomment %}
+    {% assign sidebar_items = site.sidebar %}
+    
+    {% comment %} Initial call to the recursive partial {% endcomment %}
+    {% include render_submenu.liquid, 
+        key: 'items', 
+        value: sidebar_items, 
+        level: 1, 
+        max_depth: 4 
+    %}
+</div>

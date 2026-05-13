@@ -1,0 +1,44 @@
+{#
+  @javascript: No need for this macro definition.
+  @liquid: In Jekyll, partials are included directly. We'll pass the data to the partial
+  and handle the recursion call in the main sidebar.html file.
+#}
+
+{% comment %}
+  Inputs:
+  - key: 'items'
+  - items: The list of items (either the main sidebar or the 'children' list).
+  - level: The current depth level.
+  - max_depth: The maximum depth allowed.
+{% endcomment %}
+
+{% if items == blank %}
+    {# Exit if there are no items to render #}
+{% else %}
+    <ul class="submenu level-{{ level }}">
+    {% for item in items %}
+        {% assign label = item.label %}
+        {% assign url = item.url | default: 'path-to-page.html' %}
+        
+        {# 1. Render the current item link #}
+        <li>
+            {% if item.url %}
+                <a href="{{ url }}" class="sidebar-item level-{{ level }}">{{ label }}</a>
+            {% else %}
+                <p style="color:orange;">{{ label }}</p>
+            {% endif %}
+            
+            {# 2. Check for children and if we haven't hit max depth #}
+            {% if item.children and item.children.size > 0 and level < max_depth %}
+                {# 3. The recursive step: INCLUDE the partial again, passing the children data #}
+                {% include render_submenu.liquid, 
+                  key: 'items', 
+                  value: item.children, 
+                  level: level + 1, 
+                  max_depth: max_depth 
+                %}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
