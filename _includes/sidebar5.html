@@ -1,11 +1,60 @@
 <div class="sidenav">
     {% comment %} Start the top-level UL that contains all items {% endcomment %}
-    {% assign sidebar_items = site.sidebar %}
-    
-    {% comment %} Initial call to the recursive partial {% endcomment %}
-    {% include render_submenu.liquid
-        items=sidebar_items
-        level=1
-        max_depth=4 
-    %}
+    {% comment %} DEBUG: Check if the main sidebar variable exists and what it contains {% endcomment %}
+    {% if site.sidebar == blank %}
+        {% if site.debug %}
+            <div style="border: 2px solid red; padding: 10px;">
+                🚨 DEBUG: ERROR! 'site.sidebar' is BLANK. Check your _config.yml structure and YAML loading.
+            </div>
+        {% endif %}
+    {% else %}
+        {% if site.debug %}
+            <div style="border: 2px solid green; padding: 10px;">
+                🟢 DEBUG: SUCCESS! 'site.sidebar' has data. It has {{ site.sidebar | size }} root item(s).
+            </div>
+            <script>
+                console.debug("site.sidebar: {{site.sidebar | jsonify}}")
+            </script>
+        {% endif %}
+
+        {% comment %}Make page map for sidebar use{% endcomment %}
+        {% include page_map.html %}
+        {% if site.debug %}
+            <div style="border: 2px solid blue; padding: 10px;">
+                Pages in lookup: {{ page_lookup | size}}
+                {% comment %} When it was label, could have done: site.sidebar[0].children[0].label{% endcomment %}
+        {% comment %}
+                {% assign first_item = site.sidebar[0] %}
+                {% assign first_child = first_item.children | map: "first" | first %}
+                {% if first_child.id %}
+        {% endif %}
+                    {% assign test_id = first_child.id %}
+                    id: {{ test_id }}
+                    page_lookup has id: {% if page_lookup contains test_id %}true{% else %}false{% endif %}
+        {% endcomment %}
+                    {% comment %}This isn't the way to do it...{% endcomment %}{% comment %}
+                    page_lookup[test_id]: {{ page_lookup[test_id] }}
+        {% endcomment %}{% if site.debug %}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {% comment %} Now include the recursive partial {% endcomment %}
+        {% assign sidebar_items = site.sidebar %}
+        
+        {% comment %} Initial call to the recursive partial {% endcomment %}
+        {% comment %}
+        {% include render_submenu.html
+            key='items'
+            items=sidebar_items
+            level=1
+            max_depth=4
+        %}
+        {% endcomment %}
+        {% assign items = sidebar_items %}
+        {% assign level = 1 %}
+        {% assign max_depth = 4 %}
+        {% assign debug = site.debug %}
+        {% include render_submenu_page_lookup.html %}
+    {% endif %}
 </div>

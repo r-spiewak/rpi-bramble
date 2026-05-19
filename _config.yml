@@ -3,11 +3,11 @@ title: "Raspberry Pi Bramble Home"
 collections:
   site_content:
     output: true
-    order:
-      - 2024-03-12-bill-of-materials.md
-      - 2024-03-12-assembly-instructions.md
-      - 2024-03-26-OS-setup.md
-      - 2024_03_29-install-munge.md
+    # order:
+    #   - 2024-03-12-bill-of-materials.md
+    #   - 2024-03-12-assembly-instructions.md
+    #   - 2024-03-26-OS-setup.md
+    #   - 2024_03_29-install-munge.md
     sort_by: order
 defaults:
   -
@@ -18,19 +18,44 @@ defaults:
       layout: "site_content"
 
 sidebar:
-  - label: "Steps"
+  # Note 1: An id can be used to lookup the title/url of a page. 
+  #         Alternatively, a title/url attribute can be supplied
+  #         to override the automatic lookup.
+  # Note 2: The id to be supplied here should match the id
+  #         auto-generated from the page filename, NOT the one
+  #         in the id field defined in the page metadata in the
+  #         file itself.
+  # Note 3: The id auto-generated from the page filename is
+  #         basically the filename with both the date at the
+  #         beginning (including the next dash separator) and
+  #         the file extension at the end (.md) removed. It is
+  #         also case-sensitive.
+  #         So, the id for filename `2020-01-01-Example-page.md`
+  #         would be `Example-page`.
+  - title: "Steps"
     children:
-      - bill-of-materials
-      - assembly-instructions
-      - os-setup
-      - shared-storage
-      - install-munge
-      - install-libaio
-      - install-ncurses
-      - install-mysql
-  # - label: Menu Item with SubItems
-  #   children: 
-  #     - child-1-id
-  #     - child-2-id
+      - id: bill-of-materials
+      - id: assembly-instructions
+      # - id: os-setup
+      - id: OS-setup
+      # - id: setup-port-switch
+      - id: setup-ethernet-switch-routing
+      - id: shared-storage
+      - id: install-munge
+      - id: install-libaio
+      - id: install-ncurses
+      - id: install-mysql
+      - id: install-slurm
+  - title: Menu Item with SubItems
+    children: 
+      - title: child-1-id
+        children:
+          - title: sub-child
+      - title: child-2-id
+
+# debug: true
 
 # permalink: /:categories/:year/:month/:day/:title:output_ext
+
+# plugins:
+# - jekyll-menus

@@ -1,0 +1,132 @@
+{% comment %}
+  Inputs:
+  - items: The list of items (either the main sidebar or the 'children' list).
+  - page_lookup: The string representing the page lookup, constructed in page_map.html.
+  - level: The current depth level.
+  - max_depth: The maximum depth allowed.
+{% endcomment %}
+
+{% if side.debug %}
+    <div style="border: 1px dashed violet; padding: 10px;">
+        DEBUG START: Rendering level {{ level }}: {{ items | size }} items (Max Depth: {{ max_depth }}). {% comment %}(items: {{items}}).{% endcomment %}
+    </div>
+    <script>
+        console.debug("Debug: {{site.debug | jsonify}}\nLevel: {{level}}\nmax_depth: {{max_depth}}"/*"\nItems: {{items}}"*/);
+    </script>
+{% endif %}
+
+{% if items == blank %}
+    {% comment %} Exit if there are no items to render {% endcomment %}
+    <script>
+        console.debug("Blank items.")
+    </script>
+{% else %}
+    <ul class="submenu level-{{ level }}">
+    {% for item in items %}
+        {% comment %} Reset values assigned below {% endcomment %}
+        {% assign search_key = nil %}
+        {% assign search_pattern = nil %}
+        {% assign found_string = nil %}
+        {% assign lookup_val = nil %}
+        {% assign lookup_title = nil %}
+        {% assign lookup_url = nil %}
+        {% assign title = nil %}
+        {% assign url = nil %}
+
+        {% comment %}0. Get attributes from lookup or manual overrides {% endcomment %}
+        
+        {% if item.id %}
+            {% assign search_key = item.id %} 
+            {% assign search_pattern = search_key | append: ":" %}
+            {% assign found_string = page_lookup | split: "|" | where_exp: "item", "item contains search_pattern" | first %}
+            {% if site.debug %}
+                {% if found_string == "" or found_string == nil or found_string == false %}
+                    <p style="color:red;" class="sidebar-item level-{{ level }}">Search pattern {{ search_pattern }} not found...</p>
+                    {% if found_string == "" %}
+                        <p style="color:red;" class="sidebar-item level-{{ level }}">found string is ""</p>
+                        {% comment %}
+                            Note that "" is actually considered truthy here...
+                        {% endcomment %}
+                    {% else %}
+                        {% if found_string == nil %}
+                            <p style="color:red;" class="sidebar-item level-{{ level }}">found string is nil</p>
+                        {% else %}
+                            {% if found_string == false %}
+                                <p style="color:red;" class="sidebar-item level-{{ level }}">found string is false</p>
+                            {% else %}
+                                <p style="color:red;" class="sidebar-item level-{{ level }}">found string is not "", nil, nor false...</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if found_string %}
+                {% assign lookup_val = found_string | split: "{" | last | split: "}" | first %}
+                {% assign lookup_title = lookup_val | split: '"url":' | first | split: '"title":' | last | remove: '"' %}
+                {% assign lookup_url = lookup_val | split: '"url":' | last | remove: '"' %}
+            {% endif %}
+        {% endif %}
+        {% if item.title %}
+            {% assign title = item.title %}
+        {% else %}
+            {% if lookup_title %}
+                {% assign title = lookup_title %}
+            {% endif %}
+        {% endif %}
+        {% if item.url %}
+            {% assign url = item.url %}
+        {% else %}
+            {% if lookup_url %}
+                {% assign url = lookup_url %}
+            {% endif %}
+        {% endif %}
+        
+        {% comment %} 1. Render the current item link {% endcomment %}
+        <li>
+            {% if site.debug %}
+                <p style="color:green;">ID: {{ item.id }}; lookup title: {{ lookup_title }}; lookup url: {{ lookup_url }}; Title: {{ title }}; URL: {{ url }}; search pattern: {{ search_pattern }}; found string: {{ found_string }}; page lookup: {{ page_lookup }}</p>
+            {% endif %}
+            {% if url %}
+                {% if site.debug %}
+                    <p style="color:green;">{{ title }}{{ url }}</p>
+                {% endif %}
+                {% comment %}<a href="{{ url }}" class="sidebar-item level-{{ level }}">{{level}}: {{ title }}: {{ url }}</a>{% endcomment %}
+                <a href="{{ url }}" class="sidebar-item level-{{ level }}">{{ title }}</a>
+                {% comment %}<a href="{{ url }}" class="sidebar-item">{{level}}: {{ title }}</a>{% endcomment %}
+            {% else %}
+                {% if title %}
+                    {% comment %}<p style="color:orange;">{{level}}: {{ title }}</p>{% endcomment %}
+                    <p style="color:orange;" class="sidebar-item level-{{ level }}">{{ title }}</p>
+                {% else %}
+                    <p style="color:red;" class="sidebar-item level-{{ level }}">No title/url given, and item {{ item.id }} not found in {{ page_lookup }}</p>
+                {% endif %}
+            {% endif %}
+            
+            {% comment %} 2. Check for children and if we haven't hit max depth {% endcomment %}
+            {% if item.children and item.children.size > 0 and level < max_depth %}
+                {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
+                {% assign children = item.children %}
+                {% assign next_level = level | plus: 1 %}
+                {% if site.debug %}
+                    <p style="color:blue;">{{ label }} has children. Going to level {{ next_level }}</p>
+                {% endif %}
+                
+                {% comment %}Store current values{% endcomment %}
+                {% assign current_items = items %}
+                {% assign current_level = level %}
+                
+                {% comment %}Assign values for next recursive call{% endcomment %}
+                {% assign items = item.children %}
+                {% assign level = next_level %}
+                {% assign max_depth = max_depth %}
+                
+                {% include render_submenu_page_lookup.html %}
+                
+                {% comment %}Restore previous values{% endcomment %}
+                {% assign level = current_level %}
+                {% assign items = current_items %}
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}

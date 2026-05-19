@@ -1,0 +1,95 @@
+{% comment %} 
+  BUILD PAGE LOOKUP MAP: This loop runs only ONCE (O(N)).
+     It creates a dictionary/hash for instant lookups later.
+{% endcomment %}
+
+{% comment %} 1. Build a delimited string with key-value pairs {% endcomment %}
+{% comment %}
+{% assign page_lookup = "" %}
+{% endcomment %}
+
+{% for page in site.site_content %}
+    {% assign page_id = page.data.id %}
+    {% if site.debug %}
+        <div style="border: 2px solid blue; padding: 10px;">
+            Page id: {{ page.id }}
+        </div> 
+    {% endif %}
+    {% comment %} Initialize the lookup map variable {% endcomment %}
+    {% comment %}
+    {% assign page_lookup = page_lookup | append: page_id | append: '{title: "' | append: page.title | append: '", url: "' | append: page.url | append: '"}' %}
+    {% endcomment %}  
+    {% comment %}
+    {% capture pair %}{{ page.id }}:{{ page.title }}{% endcapture %}
+    {% endcomment %}
+    {% capture pair %}{{ page.id }}:'{"title":"{{ page.title }}", "url": "{{ page.url }}"}'{% endcapture %}
+    {% if site.debug %}
+        <div style="border: 2px solid blue; padding: 10px;">
+            pair: {{ pair }}
+        </div> 
+    {% endif %}
+    {% comment %}
+    {% assign page_lookup = page_lookup | push: pair %}
+    {% endcomment %}
+    {% if page_lookup %}
+        {% capture page_lookup %}{{ page_lookup }}|{{ pair }}{% endcapture %}
+    {% else %}
+        {% assign page_lookup = pair %}
+    {% endif %}
+{% endfor %}
+
+{% if site.debug %}
+    <div style="border: 2px solid blue; padding: 10px;">
+        page_lookup: {{ page_lookup }}
+    </div> 
+{% endif %}
+
+{% comment %} 2. Join the array into a single string to use as a dictionary {% endcomment %}
+{% comment %}
+{% assign map_string = page_lookup | join: "|" %}
+{% if site.debug %}
+    <div style="border: 2px solid blue; padding: 10px;">
+        map_string: {{ map_string }}
+    </div> 
+{% endif %}
+{% endcomment %}
+
+{% comment %} 
+    Comments for example steps below to get a value from the string: 
+    3. Query the map later using string manipulation 
+    4. Extract the value
+{% endcomment %}
+{% comment %}
+{% assign search_key = "bill-of-materials" %} 
+
+{% comment %} Add pipe symbols to ensure exact key matches (e.g., matching /about, not /about-us) {% endcomment %}
+{% assign search_pattern = search_key | append: ":" %}
+{% assign found_string = page_lookup | split: "|" | where_exp: "item", "item contains search_pattern" | first %}
+{% if site.debug %}
+    <div style="border: 2px solid blue; padding: 10px;">
+        found_string: {{ found_string }}
+    </div> 
+{% endif %}
+{% assign val = found_string | split: "{" | last | split: "}" | first %}
+{% if site.debug %}
+    <div style="border: 2px solid orange; padding: 10px;">
+        val: {{ val }}
+    </div> 
+{% endif %}
+{% assign page_title = val | split: '"url":' | first | split: '"title":' | last %}
+{% assign page_url = val | split: '"url":' | last %}
+{% if site.debug %}
+    <div style="border: 2px solid purple; padding: 10px;">
+        page_title: {{ page_title }}; page_url: {{ page_url }}
+    </div> 
+{% endif %}
+{% endcomment %}
+<!-- <div style="border: 2px solid blue; padding: 10px;">
+    Pages in lookup: {{ page_lookup | size}}
+</div> -->
+
+{% comment %} 
+(A real implementation would use a more complex assignment filter/loop 
+to build a clean hash, but for demonstration, 
+this block simulates building the dictionary 'page_lookup'.) 
+{% endcomment %}

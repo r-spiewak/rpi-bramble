@@ -14,12 +14,19 @@ layout: default
 
         .sidenav {
             width: 130px;
-            position: fixed;
+            /* position: fixed; */
+            position: sticky;
             z-index: 1;
-            top: 80px;
+            /* top: 60px;
+            bottom: 20px; */
+            top: 0;
+            bottom: 0;
             left: 10px;
             background: #eee;
-            overflow-x: hidden;
+            /* overflow-x: hidden; */
+            overflow-x: scroll;
+            height: 80dvh;       /* Sets height to 80% of the viewport height */
+            overflow-y: auto;
             padding: 8px 0;
         }
 
@@ -81,11 +88,11 @@ layout: default
         }
         .submenu {
             list-style: none;
-            padding-left: 20px; /* Indentation for submenus */
-            margin-top: 5px;
+            padding-left: 1px; /* Indentation for submenus */
+            margin-top: 1px;
         }
         .submenu .sidebar-item {
-            margin-bottom: 3px;
+            margin-bottom: 5px;
         }
 
     </style>
@@ -110,7 +117,7 @@ layout: default
 <body>
     {% if site.sidebar %}
         <!--<div class="sidenav">-->
-            {% include sidebar5.html %}
+            {% include sidebar5a.html %}
         <!--</div>-->
     {% endif %}
     <div class="main">

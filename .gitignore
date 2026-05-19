@@ -2,7 +2,7 @@
 _site
 
 **/*.DS_Store
-
+.jekyll-cache
 
 notes
 TODO.md

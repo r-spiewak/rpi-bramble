@@ -11,8 +11,20 @@
   - max_depth: The maximum depth allowed.
 {% endcomment %}
 
+{% if side.debug %}
+    <div style="border: 1px dashed violet; padding: 10px;">
+        DEBUG START: Rendering level {{ level }}: {{ items | size }} items (Max Depth: {{ max_depth }}). {% comment %}(items: {{items}}).{% endcomment %}
+    </div>
+    <script>
+        console.debug("Debug: {{site.debug | jsonify}}\nLevel: {{level}}\nmax_depth: {{max_depth}}"/*"\nItems: {{items}}"*/);
+    </script>
+{% endif %}
+
 {% if items == blank %}
     {% comment %} Exit if there are no items to render {% endcomment %}
+    <script>
+        console.debug("Blank items.")
+    </script>
 {% else %}
     <ul class="submenu level-{{ level }}">
     {% for item in items %}
@@ -32,13 +44,29 @@
             {% if item.children and item.children.size > 0 and level < max_depth %}
                 {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
                 {% assign children = item.children %}
-                {% assign next_level = level + 1 %}
-                <p style="color:blue;">{{ label }} has children. Going to level {{ next_level }}</p>
-                {% include render_submenu.liquid
+                {% assign next_level = level | plus: 1 %}
+                {% if site.debug %}
+                    <p style="color:blue;">{{ label }} has children. Going to level {{ next_level }}</p>
+                {% endif %}
+                {% comment %}
+                {% include render_submenu.html
+                  key='items'
                   items=children
                   level=next_level
                   max_depth=max_depth 
                 %}
+                {% endcomment %}
+                {% comment %}Store current values{% endcomment %}
+                {% assign current_items = items %}
+                {% assign current_level = level %}
+                {% comment %}Assign values for next recursive call{% endcomment %}
+                {% assign items = item.children %}
+                {% assign level = next_level %}
+                {% assign max_depth = max_depth %}
+                {% include render_submenu.html %}
+                {% comment %}Restore previous values{% endcomment %}
+                {% assign level = current_level %}
+                {% assign items = current_items %}
             {% endif %}
         </li>
     {% endfor %}
