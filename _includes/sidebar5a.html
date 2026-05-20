@@ -15,7 +15,9 @@
         {% assign level = 1 %}
         {% assign max_depth = 4 %}
 
-        {% comment %} Initial call to the recursive partial {% endcomment %}
-        {% include render_submenu_page_lookup.html %}
+        <ul class="submenu level-0" id="main_submenu">
+            {% comment %} Initial call to the recursive partial {% endcomment %}
+            {% include render_submenu_page_lookup.html %}
+        </ul>
     {% endif %}
 </div>

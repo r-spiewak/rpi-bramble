@@ -21,7 +21,11 @@
         console.debug("Blank items.")
     </script>
 {% else %}
-    <ul class="submenu level-{{ level }}">
+    {% comment %}
+    <ul class="submenu level-{{ level }}" id="{{ item.id | slugify }}_submenu">
+    {% endcomment %}{% comment %}
+    <ul class="submenu level-{{ level }}" id="{{ item.id | slugify }}_submenu" style="display:none;">
+    {% endcomment %}
     {% for item in items %}
         {% comment %} Reset values assigned below {% endcomment %}
         {% assign search_key = nil %}
@@ -82,28 +86,56 @@
         {% endif %}
         
         {% comment %} 1. Render the current item link {% endcomment %}
-        <li>
+        <li class="sidebar-item level-{{ level }}">
             {% if site.debug %}
                 <p style="color:green;">ID: {{ item.id }}; lookup title: {{ lookup_title }}; lookup url: {{ lookup_url }}; Title: {{ title }}; URL: {{ url }}; search pattern: {{ search_pattern }}; found string: {{ found_string }}; page lookup: {{ page_lookup }}</p>
             {% endif %}
-            {% if url %}
-                {% if site.debug %}
-                    <p style="color:green;">{{ title }}{{ url }}</p>
-                {% endif %}
-                {% comment %}<a href="{{ url }}" class="sidebar-item level-{{ level }}">{{level}}: {{ title }}: {{ url }}</a>{% endcomment %}
-                <a href="{{ url }}" class="sidebar-item level-{{ level }}">{{ title }}</a>
-                {% comment %}<a href="{{ url }}" class="sidebar-item">{{level}}: {{ title }}</a>{% endcomment %}
-            {% else %}
-                {% if title %}
-                    {% comment %}<p style="color:orange;">{{level}}: {{ title }}</p>{% endcomment %}
-                    <p style="color:orange;" class="sidebar-item level-{{ level }}">{{ title }}</p>
+            {% comment %} Capture the rendering for possible accordian button use {% endcomment %}
+            {% capture menu_item %}
+                {% if url %}
+                    {% if site.debug %}
+                        <p style="color:green;">{{ title }}{{ url }}</p>
+                    {% endif %}
+                    {% comment %}<a href="{{ url }}" class="sidebar-item level-{{ level }}">{{level}}: {{ title }}: {{ url }}</a>{% endcomment %}
+                    <a href="{{ url }}" class="sidebar-item level-{{ level }}">{{ title }}</a>
+                    {% comment %}<a href="{{ url }}" class="sidebar-item">{{level}}: {{ title }}</a>{% endcomment %}
                 {% else %}
-                    <p style="color:red;" class="sidebar-item level-{{ level }}">No title/url given, and item {{ item.id }} not found in {{ page_lookup }}</p>
+                    {% if title %}
+                        {% comment %}<p style="color:orange;">{{level}}: {{ title }}</p>{% endcomment %}
+                        <p style="color:orange;" class="sidebar-item level-{{ level }}">{{ title }}</p>
+                    {% else %}
+                        <p style="color:red;" class="sidebar-item level-{{ level }}">No title/url given, and item {{ item.id }} not found in {{ page_lookup }}</p>
+                    {% endif %}
+                {% endif %}
+            {% endcapture %}
+            {% if site.debug %}
+                {% if menu_item %}
+                    {% if menu_item == "" %}
+                        <p style="color:red;">menu_item was blank str...</p>
+                    {% else %}
+                        <p style="color:purple;">menu_item: {{ menu_item }}</p>
+                    {% endif %}
+                {% else %}
+                    <p style="color:red;">menu_item was falsey...</p>
                 {% endif %}
             {% endif %}
-            
             {% comment %} 2. Check for children and if we haven't hit max depth {% endcomment %}
             {% if item.children and item.children.size > 0 and level < max_depth %}
+                <button 
+                    class="sidebar-item-toggle sidebar_item_toggle_level-{{ level }}" 
+                    id="#{{ title | slugify }}_submenu"
+                    data-target="{{ title | slugify }}_submenu"
+                    aria-expanded="false"
+                    onclick="toggleAccordion(this)"
+                >
+                    <span class="sidebar-icon">></span>
+                    {{ menu_item }}
+                </button>
+                <ul 
+                    class="submenu level-{{ level }}" 
+                    id="{{ title | slugify }}_submenu" 
+                    style="display:none;"
+                >
                 {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
                 {% assign children = item.children %}
                 {% assign next_level = level | plus: 1 %}
@@ -125,6 +157,10 @@
                 {% comment %}Restore previous values{% endcomment %}
                 {% assign level = current_level %}
                 {% assign items = current_items %}
+                </ul>
+            {% else %}
+                {% comment %} No submenu, just print item withoout toggle accordion {% endcomment %}
+                {{ menu_item }}
             {% endif %}
         </li>
     {% endfor %}
