@@ -14,26 +14,28 @@ layout: default
 
         .sidenav {
             width: 130px;
-            /* position: fixed; */
-            position: sticky;
+            position: fixed;
+            /* The below makes the actual site content appear below the nav menu */
+            /* position: sticky; */
             z-index: 1;
-            /* top: 60px;
-            bottom: 20px; */
-            top: 0;
-            bottom: 0;
-            left: 10px;
+            top: 60px;
+            bottom: 20px;
+            /* top: 0;
+            bottom: 0; */
+            /* left: 5px; */
+            left: 0;
             background: #eee;
             /* overflow-x: hidden; */
             overflow-x: scroll;
-            height: 80dvh;       /* Sets height to 80% of the viewport height */
+            height: 57dvh;       /* Sets height to 57% of the viewport height; calibrated so it never overlaps the footer  */
             overflow-y: auto;
-            padding: 8px 0;
+            padding: 8px 0 8px 0;
         }
 
         .sidenav a {
-            padding: 6px 8px 6px 16px;
+            padding: 0px 8px 0px 8px;
             text-decoration: none;
-            font-size: 25px;
+            font-size: 15px;
             color: #2196F3;
             display: block;
         }
@@ -89,26 +91,38 @@ layout: default
         .submenu {
             list-style: none;
             padding-left: 1px; /* Indentation for submenus */
+            margin-left: 2px;
             margin-top: 1px;
         }
         .submenu .sidebar-item {
             margin-bottom: 5px;
+            margin-left: calc(var(--submenu-indent, 4px) + 2px);
+        }
+
+        .sidebar-item .submenu {
+            margin-bottom: 5px;
+            margin-left: calc(var(--sidebar-item-indent, 8px) + 6px);
         }
 
         .sidebar-item-toggle {
             /* Styles for the button/button-like element */
             display: flex;
-            align-items: center;
+            /* align-items: center; */
+            align-items: left;
             width: 100%;
             background: none;
             border: none;
-            padding: 5px 0;
+            padding: 2px 0 0 0px;
             cursor: pointer;
             text-align: left;
             font-size: 1rem;
         }
 
         .sidebar-icon {
+            border: 1px solid black; 
+            padding: 1px; 
+            height: 12px; 
+            width: 14px;
             transition: transform 0.2s;
             /* Initial state: point right */
             /* For the custom one, it points down, so rotate it: */
@@ -119,6 +133,10 @@ layout: default
 
         /* State when expanded */
         .sidebar-item-toggle.expanded .sidebar-icon {
+            border: 1px solid black; 
+            padding: 1px; 
+            height: 12px; 
+            width: 14px;
             /* Rotate it to point down */
             /* transform: rotate(90deg);  */
             /* For the custom one, it points down, so don't rotate it here: */

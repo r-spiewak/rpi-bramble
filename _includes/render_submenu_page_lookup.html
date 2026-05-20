@@ -97,7 +97,10 @@
                         <p style="color:green;">{{ title }}{{ url }}</p>
                     {% endif %}
                     {% comment %}<a href="{{ url }}" class="sidebar-item level-{{ level }}">{{level}}: {{ title }}: {{ url }}</a>{% endcomment %}
+                    {% comment %}
                     <a href="{{ url }}" class="sidebar-item level-{{ level }}">{{ title }}</a>
+                    {% endcomment %}
+                    <a href="{{ url }}" >{{ title }}</a>
                     {% comment %}<a href="{{ url }}" class="sidebar-item">{{level}}: {{ title }}</a>{% endcomment %}
                 {% else %}
                     {% if title %}
