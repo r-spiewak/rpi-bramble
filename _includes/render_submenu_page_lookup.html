@@ -128,7 +128,9 @@
                     aria-expanded="false"
                     onclick="toggleAccordion(this)"
                 >
-                    <span class="sidebar-icon">></span>
+                    <span class="sidebar-icon">
+                        {% include collapsible_sidebar_icon.html %}
+                    </span>
                     {{ menu_item }}
                 </button>
                 <ul 

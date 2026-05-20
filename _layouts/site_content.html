@@ -111,6 +111,8 @@ layout: default
         .sidebar-icon {
             transition: transform 0.2s;
             /* Initial state: point right */
+            /* For the custom one, it points down, so rotate it: */
+            transform: rotate(-90deg);
             display: inline-block;
             transition: transform 0.2s;
         }
@@ -118,7 +120,9 @@ layout: default
         /* State when expanded */
         .sidebar-item-toggle.expanded .sidebar-icon {
             /* Rotate it to point down */
-            transform: rotate(90deg); 
+            /* transform: rotate(90deg);  */
+            /* For the custom one, it points down, so don't rotate it here: */
+            transform: rotate(0deg);
         }
 
     </style>
