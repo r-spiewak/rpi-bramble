@@ -2,13 +2,15 @@
     {% if site.sidebar == blank %}
         {% if site.debug %}
             <div style="border: 2px solid red; padding: 10px;">
-                🚨 DEBUG: ERROR! 'site.sidebar' is BLANK. Check your _config.yml structure and YAML loading.
+                🚨 DEBUG: ERROR! 'site.sidebar' is BLANK. Check _config.yml structure and YAML loading.
             </div>
         {% endif %}
     {% else %}
         {% comment %} Make page map for sidebar use {% endcomment %}
         {% include page_map.html %}
-
+        {% if site.debug %}
+            <p style="color:green;">{{ page_lookup }}</p>
+        {% endif %}
         {% comment %} Assign values for recursive partial {% endcomment %}
         {% assign sidebar_items = site.sidebar %}
         {% assign items = sidebar_items %}

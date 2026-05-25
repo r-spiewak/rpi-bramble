@@ -40,6 +40,9 @@
         {% comment %}0. Get attributes from lookup or manual overrides {% endcomment %}
         
         {% if item.id %}
+            {% if site.debug %}
+                <p style="color:green;">Found item.id {{ item.id }}...</p>
+            {% endif %}
             {% assign search_key = item.id %} 
             {% assign search_pattern = search_key | append: ":" %}
             {% assign found_string = page_lookup | split: "|" | where_exp: "item", "item contains search_pattern" | first %}
