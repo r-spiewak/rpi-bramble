@@ -66,7 +66,14 @@
             {% endif %}
             {% if found_string %}
                 {% assign lookup_val = found_string | split: "{" | last | split: "}" | first %}
-                {% assign lookup_title = lookup_val | split: '"url":' | first | split: '"title":' | last | remove: '"' %}
+                {% assign lookup_title_dirty = lookup_val | split: '"url":' | first | split: '"title":' | last | remove: '"' | rstrip %}
+                {% assign lookup_title_dirty_last_char = lookup_title_dirty | slice: -1 %}
+                {% if lookup_title_dirty_last_char == "," %}
+                    {% assign lookup_title_dirty_length = lookup_title_dirty | size | minus: 1 %}
+                    {% assign lookup_title = lookup_title_dirty | slice: 0, lookup_title_dirty_length %}
+                {% else %}
+                    {% assign lookup_title = lookup_title_dirty %}
+                {% endif %}
                 {% assign lookup_url = lookup_val | split: '"url":' | last | remove: '"' %}
             {% endif %}
         {% endif %}
