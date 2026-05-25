@@ -124,45 +124,47 @@
             {% endif %}
             {% comment %} 2. Check for children and if we haven't hit max depth {% endcomment %}
             {% if item.children and item.children.size > 0 and level < max_depth %}
-                <button 
-                    class="sidebar-item-toggle sidebar_item_toggle_level-{{ level }}" 
-                    id="#{{ title | slugify }}_submenu"
-                    data-target="{{ title | slugify }}_submenu"
-                    aria-expanded="false"
-                    onclick="toggleAccordion(this)"
-                >
-                    <span class="sidebar-icon">
-                        {% include collapsible_sidebar_icon.html %}
-                    </span>
-                    {{ menu_item }}
-                </button>
-                <ul 
-                    class="submenu level-{{ level }}" 
-                    id="{{ title | slugify }}_submenu" 
-                    style="display:none;"
-                >
-                {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
-                {% assign children = item.children %}
-                {% assign next_level = level | plus: 1 %}
-                {% if site.debug %}
-                    <p style="color:blue;">{{ label }} has children. Going to level {{ next_level }}</p>
-                {% endif %}
-                
-                {% comment %}Store current values{% endcomment %}
-                {% assign current_items = items %}
-                {% assign current_level = level %}
-                
-                {% comment %}Assign values for next recursive call{% endcomment %}
-                {% assign items = item.children %}
-                {% assign level = next_level %}
-                {% assign max_depth = max_depth %}
-                
-                {% include render_submenu_page_lookup.html %}
-                
-                {% comment %}Restore previous values{% endcomment %}
-                {% assign level = current_level %}
-                {% assign items = current_items %}
-                </ul>
+                <span class="sidebar-item level-{{ level }} bar" >
+                    <button 
+                        class="sidebar-item-toggle sidebar_item_toggle_level-{{ level }}" 
+                        id="#{{ title | slugify }}_submenu"
+                        data-target="{{ title | slugify }}_submenu"
+                        aria-expanded="false"
+                        onclick="toggleAccordion(this)"
+                    >
+                        <span class="sidebar-icon">
+                            {% include collapsible_sidebar_icon.html %}
+                        </span>
+                        {{ menu_item }}
+                    </button>
+                    <ul 
+                        class="submenu level-{{ level }}" 
+                        id="{{ title | slugify }}_submenu" 
+                        style="display:none;"
+                    >
+                    {% comment %} 3. The recursive step: INCLUDE the partial again, passing the children data {% endcomment %}
+                    {% assign children = item.children %}
+                    {% assign next_level = level | plus: 1 %}
+                    {% if site.debug %}
+                        <p style="color:blue;">{{ label }} has children. Going to level {{ next_level }}</p>
+                    {% endif %}
+                    
+                    {% comment %}Store current values{% endcomment %}
+                    {% assign current_items = items %}
+                    {% assign current_level = level %}
+                    
+                    {% comment %}Assign values for next recursive call{% endcomment %}
+                    {% assign items = item.children %}
+                    {% assign level = next_level %}
+                    {% assign max_depth = max_depth %}
+                    
+                    {% include render_submenu_page_lookup.html %}
+                    
+                    {% comment %}Restore previous values{% endcomment %}
+                    {% assign level = current_level %}
+                    {% assign items = current_items %}
+                    </ul>
+                </span>
             {% else %}
                 {% comment %} No submenu, just print item withoout toggle accordion {% endcomment %}
                 {{ menu_item }}

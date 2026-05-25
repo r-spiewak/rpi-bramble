@@ -87,6 +87,8 @@ layout: default
         .sidebar-root > .sidebar-item {
             list-style: none;
             margin-bottom: 5px;
+            position: relative;
+            padding-left: 0; 
         }
         .submenu {
             list-style: none;
@@ -116,6 +118,42 @@ layout: default
             cursor: pointer;
             text-align: left;
             font-size: 1rem;
+        }
+
+        /* .sidebar-item-toggle::before { */
+        /* .sidebar-item .level-1::before{ */
+        /* .sidebar-item .level-1 { */
+        /* .sidebar-item { */
+        .sidebar-item .bar {
+            content: '';
+            display: block;
+            width: 0.5px; /* Width of the vertical bar */
+            height: 100%;
+            background-color: #161616; /* Color of the bar */
+            margin-left: 0; /* Ensures it starts exactly at the edge */
+            /* padding-right: 1px; */
+        }
+        /* .sidebar-root > .sidebar-item > .sidebar-item-toggle {
+            padding-left: 0; // Reset padding for level 1 items
+        } */
+        {% comment %}
+        /* Level 2 items (Submenus) */
+        .submenu .sidebar-item-toggle {
+            padding-left: 0; /* This overrides the padding-left set on the UL, making the LI fill the width correctly */
+        }
+
+        /* Shading for even/odd levels */
+        .level-2 .sidebar-item-toggle {
+            background-color: #f9f9f9; /* Light background for Level 2 items */
+        }
+        /* Add more specific shading for other levels if desired */
+        .level-3 .sidebar-item-toggle {
+            background-color: #f0f0f0;
+        }
+        {% endcomment %}
+
+        .sidebar-item-text {
+            padding-left: 0; 
         }
 
         .sidebar-icon {
