@@ -44,7 +44,8 @@ layout: default
 <body>
     {% if site.sidebar %}
         {% comment %}<div class="sidenav">{% endcomment %}
-            {% include sidebar5a.html %}
+            {% comment %}{% include sidebar5a.html %}{% endcomment %}
+            {% include autosidebar.html %}
         {% comment %}</div>{% endcomment %}
     {% endif %}
     <div class="main">

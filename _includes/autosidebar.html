@@ -1,0 +1,39 @@
+<div class="sidenav">
+    {% if site.autosidebar == blank %}
+        {% if site.debug %}
+            <div style="border: 2px solid red; padding: 10px;">
+                🚨 DEBUG: ERROR! 'site.autosidebar' is BLANK. Check _config.yml structure and YAML loading.
+            </div>
+        {% endif %}
+        {% if site.sidebar == blank %}
+            {% if site.debug %}
+                <div style="border: 2px solid red; padding: 10px;">
+                    🚨 DEBUG: ERROR! 'site.autosidebar' and 'site.sidebar' are BLANK. Check _config.yml structure and YAML loading.
+                </div>
+            {% endif %}
+        {% else %}
+            {% comment %} Make page map for sidebar use {% endcomment %}
+            {% include page_map.html %}
+            {% if site.debug %}
+                <p style="color:green;">{{ page_lookup }}</p>
+            {% endif %}
+            {% comment %} Assign values for recursive partial {% endcomment %}
+            {% assign sidebar_items = site.sidebar %}
+            {% assign items = sidebar_items %}
+            {% assign level = 1 %}
+            {% assign max_depth = 4 %}
+
+            <ul class="submenu level-0" id="main_submenu">
+                {% comment %} Initial call to the recursive partial {% endcomment %}
+                {% include render_submenu_page_lookup.html %}
+            </ul>
+        {% endif %}
+    {% else %}
+        {% if site.debug %}
+            <div style="border: 2px solid green; padding: 10px;">
+                🚨 DEBUG: NOTICE! 'site.autosidebar' is NOT blank.
+            </div>
+        {% endif %}
+        {% sidebar_nav %}
+    {% endif %}
+</div>
