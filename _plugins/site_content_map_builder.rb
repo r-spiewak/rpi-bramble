@@ -116,9 +116,60 @@ module Jekyll
                 end
             end
 
-            sorted_tree = sort_tree(tree)
+            # DebugUtils.set_debug_mode(true)
+            index_processed_tree = process_index_pages(tree)
+            # DebugUtils.set_debug_mode(false)
+
+            sorted_tree = sort_tree(index_processed_tree)
             self.debug_json("SiteContentMapBuilder", "build_tree", "Sorted tree:\n", sorted_tree)
             return sorted_tree
+        end
+
+        # Promote subdirectory index pages to be the page element of a directory
+        # itself, if the directory itself doesn't already have one.
+        def process_index_pages(tree)
+            # DebugUtils.set_debug_mode(true)
+            self.debug_print("SiteContentMapBuilder", "process_index_pages", "Processing index pages.")
+            processed = {}
+            tree.each do |key, node|
+                # node = tree[key]
+                self.debug_json("SiteContentMapBuilder", "process_index_pages", "Looking at node '#{key}': ", node)
+                processed[key] = node || {}
+                if node
+                    page_container = node["__page__"] || {}
+                    children_container = node["__children__"] || {}
+                    if page_container.empty?
+                        # Look for direct child index
+                        if !children_container.empty?
+                            if children_container.is_a?(Hash)
+                                index_hash = children_container.delete("index.html") || {}
+                                if !index_hash.empty?
+                                    self.debug_json("SiteContentMapBuilder", "process_index_pages", "Index hash for key '#{key}' was not empty:", index_hash)
+                                    self.debug_json("SiteContentMapBuilder", "process_index_pages", "Processed hash (pre): ", processed)
+                                    processed[key]["__page__"] = index_hash["__page__"]
+                                    self.debug_json("SiteContentMapBuilder", "process_index_pages", "Processed hash (post): ", processed)
+                                else
+                                    self.debug_print("SiteContentMapBuilder", "process_index_pages", "Index hash for key '#{key}' was empty...")
+                                end
+                            end
+                        end
+                    end
+                    # Handle Recursion:
+                    if !children_container.empty?
+                        # Check if the children container itself is a Hash before recursing.
+                        if children_container.is_a?(Hash)
+                            # Recursively process the children and assign the fully processed hash back to the node.
+                            self.debug_json("SiteContentMapBuilder", "process_index_pages", "Recursing into children_container:", children_container)
+                            processed[key]["__children__"] = process_index_pages(children_container)
+                            self.debug_print("SiteContentMapBuilder", "process_index_pages", "Finished recursion.")
+                        end
+                    end
+                else
+                    self.debug_print("SiteContentMapBuilder", "process_index_pages", "Node '#{key}' has no node...")
+                end
+            end
+            # DebugUtils.set_debug_mode(false)
+            return processed
         end
 
         # Recursively sort tree nodes by `order` then title
