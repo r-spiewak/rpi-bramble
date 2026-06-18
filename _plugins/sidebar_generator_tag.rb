@@ -103,10 +103,10 @@ class SidebarGeneratorTag < Liquid::Tag
 
 private
     # Helper method for formatting links
-    def build_link_tag(url, title)
+    def build_link_tag(baseurl, url, title)
         # Use the context to access the current domain/base URL if needed, 
         # otherwise, just use the URL path.
-        "<a href=\"#{url}\">#{title}</a>\n"
+        "<a href=\"#{baseurl}#{url}\">#{title}</a>\n"
     end
 
     # Helper method for formatting links
@@ -123,6 +123,7 @@ private
     # @param current_path: The accumulated path (e.g., "/site_content/steps").
     def build_sidebar_html(node, name, level, context, base_path, current_path)
         self.debug_print("SidebarGeneratorTag", "build_sidebar_html", "Starting with node name '#{name}' on level '#{level}'")
+        baseurl = context.registers[:site].config["baseurl"].to_s
         # Start the overall list item container
         html = ""
         if level > 0
@@ -139,7 +140,7 @@ private
             
             # We wrap the link in a top-level list item to maintain the structure
             # html += "<li class=\"sidebar-item level-#{level}\">#{build_link_tag(url, title)}</li>\n"
-            page_html = build_link_tag(url, title)
+            page_html = build_link_tag(baseurl, url, title)
         else
             page_html = build_nolink_tag(name, level)
         end
