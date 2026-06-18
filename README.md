@@ -47,4 +47,4 @@ bundle exec jekyll serve --livereload --host localhost --port 4444
 
 ### Troubleshooting
 
-1. If build errors persist even if there is nothing referring to those variables (and/or the file no longer has that many lines for which the build error produces the failing line reference), run `bundle exec jekyll clean` and rebuild. Also try manuall removing the `.jekyll_cache` directory.
+1. If build errors persist even if there is nothing referring to those variables (and/or the file no longer has that many lines for which the build error produces the failing line reference), run `bundle exec jekyll clean` and rebuild. Also try manually removing the `.jekyll_cache` directory.
