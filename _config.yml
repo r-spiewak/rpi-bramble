@@ -16,6 +16,25 @@ defaults:
       type: "site_content"
     values:
       layout: "site_content"
+  -
+    scope:
+      path: ""
+      type: pages
+    values:
+      layout: "site_content"
+
+# Note 1: autosidebar takes precedence over sidebar.
+#         If the autosidebar option is present, it will trigger.
+#         If there is an index page inside a subdirectory (and 
+#         the subdirectory itself doesn't have an index page another
+#         way), it will be promoted to be the page listing for that
+#         subdirectory.
+# Note 2: The autoindex option, if present, will also automatically
+#         create an index page for any directory that doesn't have
+#         one (a manual index file inside the directory will take
+#         precedence).
+autosidebar:
+  autoindex:
 
 sidebar:
   # Note 1: An id can be used to lookup the title/url of a page. 
@@ -34,6 +53,8 @@ sidebar:
   #         would be `Example-page`.
   - title: "Steps"
     children:
+      # - id: test-file-in-subdir
+      #   title: Test Subdir File
       - id: bill-of-materials
       - id: assembly-instructions
       # - id: os-setup

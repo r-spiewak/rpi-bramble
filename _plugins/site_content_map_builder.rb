@@ -18,7 +18,7 @@ module Jekyll
 
         def generate(site)
             all_docs = gather_all_docs(site)
-            tree = build_tree(all_docs)
+            tree = build_tree(site, all_docs)
             site.data["site_content_map"] = tree
             return tree
         end
@@ -55,7 +55,7 @@ module Jekyll
         end
 
         # Build a nested hash tree from an array of Jekyll::Page or Jekyll::Document objects
-        def build_tree(docs)
+        def build_tree(site, docs)
             tree = {}
             self.debug_print("SiteContentMapBuilder", "build_tree", "Starting tree construction for #{docs.count} documents.")
 
@@ -116,9 +116,9 @@ module Jekyll
                 end
             end
 
-            # DebugUtils.set_debug_mode(true)
-            index_processed_tree = process_index_pages(tree)
-            # DebugUtils.set_debug_mode(false)
+            DebugUtils.set_debug_mode(true)
+            index_processed_tree = process_index_pages(site, tree, "/")
+            DebugUtils.set_debug_mode(false)
 
             sorted_tree = sort_tree(index_processed_tree)
             self.debug_json("SiteContentMapBuilder", "build_tree", "Sorted tree:\n", sorted_tree)
@@ -127,7 +127,7 @@ module Jekyll
 
         # Promote subdirectory index pages to be the page element of a directory
         # itself, if the directory itself doesn't already have one.
-        def process_index_pages(tree)
+        def process_index_pages(site, tree, current_dir)
             # DebugUtils.set_debug_mode(true)
             self.debug_print("SiteContentMapBuilder", "process_index_pages", "Processing index pages.")
             processed = {}
@@ -150,6 +150,20 @@ module Jekyll
                                     self.debug_json("SiteContentMapBuilder", "process_index_pages", "Processed hash (post): ", processed)
                                 else
                                     self.debug_print("SiteContentMapBuilder", "process_index_pages", "Index hash for key '#{key}' was empty...")
+                                    if site.config.key?("autosidebar")
+                                        autosidebar_conf = site.config["autosidebar"]
+                                        if autosidebar_conf.key?("autoindex")
+                                            self.debug_print("SiteContentMapBuilder", "process_index_pages", "Generating index file for key '#{key}'...")
+                                            generated_page = generate_index_page(site, "#{current_dir}/#{key}", key)
+                                            processed[key]["__page__"] = {
+                                                "title" => generated_page.data["title"] || key.capitalize,
+                                                "url"   => generated_page.url,
+                                                "order" => -1
+                                            }
+                                        end
+                                    else
+                                        self.debug_print("SiteContentMapBuilder", "process_index_pages", "Somehow config option 'autosidebar' is not set and this is running...")
+                                    end
                                 end
                             end
                         end
@@ -160,7 +174,7 @@ module Jekyll
                         if children_container.is_a?(Hash)
                             # Recursively process the children and assign the fully processed hash back to the node.
                             self.debug_json("SiteContentMapBuilder", "process_index_pages", "Recursing into children_container:", children_container)
-                            processed[key]["__children__"] = process_index_pages(children_container)
+                            processed[key]["__children__"] = process_index_pages(site, children_container, "#{current_dir}/#{key}")
                             self.debug_print("SiteContentMapBuilder", "process_index_pages", "Finished recursion.")
                         end
                     end
@@ -170,6 +184,49 @@ module Jekyll
             end
             # DebugUtils.set_debug_mode(false)
             return processed
+        end
+
+        def generate_index_page(site, dir, title)
+            caps_title = title.split.map(&:capitalize).join(" ")
+             # 1. Define the generated file name
+            filename = "index.html"
+            # 2. Instantiate a page that doesn't rely on a physical source file
+            page = Jekyll::PageWithoutAFile.new(site, site.source, dir, filename)
+            # 3. Inject Front Matter data to tie it to your Jekyll layout
+            page.data["layout"] = "site_content"
+            page.data["title"]  = "#{caps_title}"
+            # 4. Set the core page body content (including Liquid tags)
+            # page.content = <<~MARKDOWN
+            #     ---
+            #     title: "#{title}"
+            #     order: -1
+            #     id: index
+            #     ---
+            #     # #{title}
+            #     Index for #{title} pages.
+                
+            #     The current site title is: {{ site.title }}.
+            # MARKDOWN
+            # 4.a.. Define page's content as a string
+            raw_content = <<~MARKDOWN
+                Index for #{caps_title} pages.
+                
+                The current site title is: {{ site.title }}.
+            MARKDOWN
+            # 4.b. Parse the content with Liquid
+            liquid_template = Liquid::Template.parse(raw_content)
+            # 4.c. Render it, passing in site payload and current context
+            payload = site.site_payload
+            rendered_content = liquid_template.render!(payload)
+            # 4.d. Assign the rendered content to the page
+            page.content = rendered_content
+            self.debug_json("SiteContentMapBuilder", "generate_index_page", "Generated index page: Content: ", page)
+            self.debug_json("SiteContentMapBuilder", "generate_index_page", "Generated index page: Data: ", page.data)
+            self.debug_json("SiteContentMapBuilder", "generate_index_page", "Generated index page: Url: ", page.url)
+            # 5. Push the generated page into the global site registry
+            site.pages << page
+            # 6. Return the generated index page
+            return page
         end
 
         # Recursively sort tree nodes by `order` then title
