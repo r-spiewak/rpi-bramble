@@ -1,45 +1,5 @@
 # Jekyll plugin: Generates an html sidebar from the built site map.
 
-# # Colored Text
-# COLORS = {
-#     "WHITE" => "\e[0m",
-#     "RED" => "\e[31m",
-#     "GREEN" => "\e[32m",
-#     "BLUE" => "\e[34m",
-#     "YELLOW" => "\e[33m"
-# }
-
-# # Text Color States
-# COLORS["DEBUG"] = COLORS["BLUE"]
-# COLORS["NORMAL"] = COLORS["WHITE"]
-# COLORS["ERROR"] = COLORS["RED"]
-# COLORS["WARNING"] = COLORS["YELLOW"]
-
-# DEBUG = true
-# if DEBUG
-#     require 'json'
-# end
-
-# def debug_print(class_name, method, message, *args)
-#     if DEBUG
-#         # Use a specific tag for easier searching later
-#         puts "#{COLORS['DEBUG']}--- [DEBUG][#{class_name}][#{method}] ---#{COLORS['NORMAL']} #{message} #{args.join(' ')}"
-#     end
-# end
-
-# def debug_p(obj)
-#     if DEBUG
-#         # Use a specific tag for easier searching later
-#         p obj
-#     end
-# end
-
-# def debug_json(class_name, method, message, obj)
-#     if DEBUG
-#         json_str = JSON.pretty_generate(obj, indent: "    ")
-#         puts "#{COLORS['DEBUG']}--- [DEBUG][#{class_name}][#{method}] ---#{COLORS['NORMAL']} #{message} #{json_str}"
-#     end
-# end
 
 require_relative './debug_utils'
 require_relative './title_format_utils'
@@ -132,7 +92,8 @@ private
             # html += "<li class=\"sidebar-item level-#{level}\">#{build_link_tag(url, title)}</li>\n"
             page_html = self.build_link_tag(baseurl, url, title)
         else
-            page_html = self.build_nolink_tag(name, level)
+            css_class="sidebar-item level-#{level}"
+            page_html = self.build_nolink_tag(name, css_class: css_class)
         end
         
         # 2. Check for immediate children (The loop that iterates over subkeys)

@@ -1,10 +1,7 @@
 ---
 layout: default
 ---
-<!DOCTYPE html>
-<html>
-
-<head>
+<div>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ page.title | default: site.title }}</title>
     <style>
@@ -20,7 +17,6 @@ layout: default
             padding: 0px 10px;
         }
 
-        /* .site-nav-container { */
         nav {
             display: none !important;
         }
@@ -28,47 +24,35 @@ layout: default
         {% include sidenav.css %}
 
     </style>
-</head>
 
-{% comment %}
-<body>
-    <div class="chrome">
-        <div class="chrome:body">
-            <div class="chrome:content">
-                <div class="chrome:main">
-                    <h1>{{ page.title }}</h1>
-                    {{ page.content }}
-                </div>
-                {% if site.sidebar %} {% include sidebar.html %} {% endif %}
-            </div>
-        </div>
-    </div>
-</body>
-{% endcomment %}
-
-<body>
-    {% if site.sidebar %}
+    {% if site.sidebar or site.autosidebar %}
         {% comment %}<div class="sidenav">{% endcomment %}
             {% comment %}{% include sidebar5a.html %}{% endcomment %}
             {% include autosidebar.html %}
         {% comment %}</div>{% endcomment %}
     {% endif %}
     <div class="main">
-        <h1>{{ page.title }}</h1>
-        {{ page.content | markdownify }}
+        <h1 class="page-title">{{ page.title }}</h1>
+        {% comment %}<!-- {{ page.content | markdownify }} -->{% endcomment %}
+        {{ content | markdownify }}
     </div>
+
+    {% comment %}
+    <!-- {% comment %} Block to allow things to be appended in inheriting layouts. {% endcomment %}
+    % block after_content %}
+    % endblock %} -->
+    {% endcomment %}
+
     {% comment %}{% if page.root? %}{% endif %}{% endcomment %}
-    {% if page.url == "/" or page.url == "/index.html" %}
+    {% comment %}{% if page.url == "/" or page.url == "/index.html" %}{% endif %}
         <div class="main">
             {% if site.debug %}
                 <p style="color:green;">Root index page!</p>
             {% endif %}
             {% include index-content-stub.md %}
         </div>
-    {% endif %}
+    {% if true %}{% endif %}{% endcomment %}
     <script>
         {% include sidenav.js %}
     </script>
-</body>
-
-</html>
+</div>

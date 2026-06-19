@@ -108,4 +108,12 @@ module DebugUtils
             puts "#{COLORS['DEBUG']}--- [DEBUG][#{class_name}][#{method}] ---#{COLORS['NORMAL']} #{message} #{json_str}"
         end
     end
+
+    def debug_warning(class_name, method, message, *args)
+        # if DEBUG
+        if Thread.current[:debug_mode] == true or self.class.debug_mode == true
+            # Use a specific tag for easier searching later
+            puts "#{COLORS['WARNING']}--- [DEBUG][#{class_name}][#{method}] ---#{COLORS['NORMAL']} #{message} #{args.join(' ')}"
+        end
+    end
 end

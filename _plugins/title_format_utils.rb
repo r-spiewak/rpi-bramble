@@ -9,7 +9,7 @@ module TitleFormatMixin
     end
 
     # Helper method for formatting non-links
-    def build_nolink_tag(name, level)
-        "<p style=\"color:orange;\" class=\"sidebar-item level-#{level}\">#{name}</p>\n"
+    def build_nolink_tag(name, css_class: "main", style: "color:orange;")
+        "<p style=#{style} class=#{css_class}>#{name}</p>\n"
     end
 end

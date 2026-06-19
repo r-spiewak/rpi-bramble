@@ -1,0 +1,12 @@
+---
+layout: "site_content"
+---
+
+<div>
+    {% comment %}<!-- {{ page.content | markdownify }} -->{% endcomment %}
+
+    {{ content | markdownify }}
+
+    <h2>Contents:</h2>
+    {% toc_immediate_children %}
+</div>

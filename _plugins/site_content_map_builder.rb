@@ -8,6 +8,7 @@
 # - Falls back to alphabetical by title if `order` is equal or missing.
 
 require_relative './debug_utils'
+require_relative './toc_children_link_renderer'
 
 module Jekyll
     class SiteContentMapBuilder < Generator
@@ -15,6 +16,7 @@ module Jekyll
         safe true
         priority :low
         include DebugUtils
+        include ImmediateChildrenTOCRenderer
 
         def generate(site)
             all_docs = gather_all_docs(site)
@@ -116,9 +118,9 @@ module Jekyll
                 end
             end
 
-            DebugUtils.set_debug_mode(true)
+            # DebugUtils.set_debug_mode(true)
             index_processed_tree = process_index_pages(site, tree, "/")
-            DebugUtils.set_debug_mode(false)
+            # DebugUtils.set_debug_mode(false)
 
             sorted_tree = sort_tree(index_processed_tree)
             self.debug_json("SiteContentMapBuilder", "build_tree", "Sorted tree:\n", sorted_tree)
@@ -154,7 +156,7 @@ module Jekyll
                                         autosidebar_conf = site.config["autosidebar"]
                                         if autosidebar_conf.key?("autoindex")
                                             self.debug_print("SiteContentMapBuilder", "process_index_pages", "Generating index file for key '#{key}'...")
-                                            generated_page = generate_index_page(site, "#{current_dir}/#{key}", key)
+                                            generated_page = generate_index_page(site, "#{current_dir}/#{key}", key, children_container)
                                             processed[key]["__page__"] = {
                                                 "title" => generated_page.data["title"] || key.capitalize,
                                                 "url"   => generated_page.url,
@@ -186,14 +188,15 @@ module Jekyll
             return processed
         end
 
-        def generate_index_page(site, dir, title)
+        def generate_index_page(site, dir, title, children)
             caps_title = title.split.map(&:capitalize).join(" ")
              # 1. Define the generated file name
             filename = "index.html"
             # 2. Instantiate a page that doesn't rely on a physical source file
             page = Jekyll::PageWithoutAFile.new(site, site.source, dir, filename)
-            # 3. Inject Front Matter data to tie it to your Jekyll layout
-            page.data["layout"] = "site_content"
+            # 3. Inject Front Matter data to tie it to Jekyll layout
+            # page.data["layout"] = "site_content"
+            page.data["layout"] = "index_page"
             page.data["title"]  = "#{caps_title}"
             # 4. Set the core page body content (including Liquid tags)
             # page.content = <<~MARKDOWN
@@ -207,11 +210,27 @@ module Jekyll
                 
             #     The current site title is: {{ site.title }}.
             # MARKDOWN
-            # 4.a.. Define page's content as a string
-            raw_content = <<~MARKDOWN
-                Index for #{caps_title} pages.
+            # 4.a. Define page's content
+            # 4.a.1 Get children links
+            baseurl = site.config["baseurl"].to_s
+            children_html = self.generate_immediate_children_toc(children, baseurl)
+            # 4.a.2. Define page's content as a string
+            # raw_content = <<~MARKDOWN
+            #     Auto-generated index for #{caps_title} pages.
                 
-                The current site title is: {{ site.title }}.
+            #     <!-- The current site title is: {{ site.title }}. -->
+            #     These are the pages of #{caps_title}:
+            #     <!-- {{ toc_immediate_children }} -->
+            #     <!-- {% toc_immediate_children %} -->
+            #     <!-- Have to really call the actual rb function here,
+            #         it's too early for the Liquid tag.-->
+            #     #{children_html}
+            # MARKDOWN
+            # Better: Now that we have a layout, just use the layout, 
+            # and we don't need to call the children_html explicitly.
+            raw_content = <<~MARKDOWN
+                This is the index page for #{caps_title} pages. 
+                It has the following contents.
             MARKDOWN
             # 4.b. Parse the content with Liquid
             liquid_template = Liquid::Template.parse(raw_content)
