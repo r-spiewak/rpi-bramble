@@ -28,9 +28,9 @@ module ImmediateChildrenTOCRenderer
                 else
                     page_html = self.build_nolink_tag(child)
                 end
-                html += "\t<li>\n\t\t<h3>\n"
+                html += "\t<li>\n\t\t<p class=\"toc-entry\">\n"
                 html += page_html
-                html += "\t\t</h3>\n\t</li>\n"
+                html += "\t\t</p>\n\t</li>\n"
             end
         end
         html += "</ul>\n"
