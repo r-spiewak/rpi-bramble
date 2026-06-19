@@ -9,6 +9,11 @@ layout: default
             font-family: "Lato", sans-serif;
         }
 
+        .page-title {
+            font-weight: 550;
+            font-size: 34px;
+        }
+
         .main {
             margin-left: 140px;
             /* Same width as the sidebar + left position in px */
@@ -32,7 +37,7 @@ layout: default
         {% comment %}</div>{% endcomment %}
     {% endif %}
     <div class="main">
-        <h1 class="page-title">{{ page.title }}</h1>
+        <p class="page-title">{{ page.title }}</p>
         {% comment %}<!-- {{ page.content | markdownify }} -->{% endcomment %}
         {{ content | markdownify }}
     </div>
