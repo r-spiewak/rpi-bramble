@@ -42,6 +42,7 @@
 # end
 
 require_relative './debug_utils'
+require_relative './title_format_utils'
 
 
 class SidebarGeneratorTag < Liquid::Tag
@@ -51,6 +52,7 @@ class SidebarGeneratorTag < Liquid::Tag
     # DebugUtils.set_debug_mode(true)
     # Thread.current[:debug_mode] = true
     # self.set_debug_mode(true)
+    include TitleFormatMixin
 
     # Overriding the class-level attribute inherited from the DebugUtils mixin
     def self.debug_mode
@@ -101,19 +103,7 @@ class SidebarGeneratorTag < Liquid::Tag
     # Register the tag
     Liquid::Template.register_tag('sidebar_nav', SidebarGeneratorTag)
 
-private
-    # Helper method for formatting links
-    def build_link_tag(baseurl, url, title)
-        # Use the context to access the current domain/base URL if needed, 
-        # otherwise, just use the URL path.
-        "<a href=\"#{baseurl}#{url}\">#{title}</a>\n"
-    end
-
-    # Helper method for formatting links
-    def build_nolink_tag(name, level)
-        "<p style=\"color:orange;\" class=\"sidebar-item level-#{level}\">#{name}</p>\n"
-    end
-    
+private    
     # The core recursive function
     # @param node: The hash container currently being processed (e.g., the 'steps' node).
     # @param name: The name (key) of the current node.
@@ -140,9 +130,9 @@ private
             
             # We wrap the link in a top-level list item to maintain the structure
             # html += "<li class=\"sidebar-item level-#{level}\">#{build_link_tag(url, title)}</li>\n"
-            page_html = build_link_tag(baseurl, url, title)
+            page_html = self.build_link_tag(baseurl, url, title)
         else
-            page_html = build_nolink_tag(name, level)
+            page_html = self.build_nolink_tag(name, level)
         end
         
         # 2. Check for immediate children (The loop that iterates over subkeys)
@@ -193,102 +183,3 @@ private
     end
     # DebugUtils.set_debug_mode(false)
 end
-
-# Sample output (to match) from Liquid sequence:
-# <div class="sidenav">
-#     <!-- <div style="border: 2px solid blue; padding: 10px;">
-#         Pages in lookup: 1566
-#     </div> -->
-#     <ul class="submenu level-0" id="main_submenu">
-#         <li class="sidebar-item level-1">
-#             <span class="sidebar-item level-1 bar">
-#                 <button class="sidebar-item-toggle sidebar_item_toggle_level-1" id="#steps_submenu" data-target="steps_submenu" aria-expanded="false" onclick="toggleAccordion(this)">
-#                     <span class="sidebar-icon">
-#                         <!-- This block is included via collapsible_sidebar_icon,html -->
-#                         <div style="width: 12px; height: 12px; padding-left: -1px; transform: translateY(-1px);">
-#                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" focusable="false" role="presentation" padding-left="-10px">
-#                                 <path fill="currentColor" d="M1.646 3.646a.5.5 0 01.638-.057l.07.057L6 7.293l3.646-3.647a.5.5 0 01.638-.057l.07.057a.5.5 0 01.057.638l-.057.07-4 4a.5.5 0 01-.638.057l-.07-.057-4-4a.5.5 0 010-.708z"></path>
-#                             </svg>
-#                         </div>
-#                     </span>
-#                     <p style="color:orange;" class="sidebar-item level-1">Steps</p>
-#                 </button>
-#                 <ul class="submenu level-1" id="steps_submenu" style="display:none;">
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2026-05-25-test-file-in-subdir.html">Test Subdir File</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-03-12-bill-of-materials.html">Bill of Materials</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-03-12-assembly-instructions.html">Assembly Instructions</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-03-26-OS-setup.html">OS Setup</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-09-26-setup-ethernet-switch-routing.html">Setup Ethernet Port Switch and Routing</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-03-28-shared-storage.html">Shared Storage Setup</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-03-29-install-munge.html">Munge Installation</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-04-03-install-libaio.html">Libaio Installation</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-04-04-install-ncurses.html">Ncurses Installation</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-04-03-install-mysql.html">MySQL Installation</a>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <a href=" /site_content/steps/2024-04-03-install-slurm.html">Slurm Installation</a>
-#                     </li>
-#                 </ul>
-#             </span>
-#         </li>
-#         <li class="sidebar-item level-1">
-#             <span class="sidebar-item level-1 bar">
-#                 <button class="sidebar-item-toggle sidebar_item_toggle_level-1" id="#menu-item-with-subitems_submenu" data-target="menu-item-with-subitems_submenu" aria-expanded="false" onclick="toggleAccordion(this)">
-#                     <span class="sidebar-icon">
-#                         <!-- This block is included via collapsible_sidebar_icon,html -->
-#                         <div style="width: 12px; height: 12px; padding-left: -1px; transform: translateY(-1px);">
-#                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" focusable="false" role="presentation" padding-left="-10px">
-#                                 <path fill="currentColor" d="M1.646 3.646a.5.5 0 01.638-.057l.07.057L6 7.293l3.646-3.647a.5.5 0 01.638-.057l.07.057a.5.5 0 01.057.638l-.057.07-4 4a.5.5 0 01-.638.057l-.07-.057-4-4a.5.5 0 010-.708z"></path>
-#                             </svg>
-#                         </div>
-#                     </span>
-#                     <p style="color:orange;" class="sidebar-item level-1">Menu Item with SubItems</p>
-#                 </button>
-#                 <ul class="submenu level-1" id="menu-item-with-subitems_submenu" style="display:none;">
-#                     <li class="sidebar-item level-2">
-#                         <span class="sidebar-item level-2 bar">
-#                             <button class="sidebar-item-toggle sidebar_item_toggle_level-2" id="#child-1-id_submenu" data-target="child-1-id_submenu" aria-expanded="false" onclick="toggleAccordion(this)">
-#                                 <span class="sidebar-icon">
-#                                     <!-- This block is included via collapsible_sidebar_icon,html -->
-#                                     <div style="width: 12px; height: 12px; padding-left: -1px; transform: translateY(-1px);">
-#                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" focusable="false" role="presentation" padding-left="-10px">
-#                                             <path fill="currentColor" d="M1.646 3.646a.5.5 0 01.638-.057l.07.057L6 7.293l3.646-3.647a.5.5 0 01.638-.057l.07.057a.5.5 0 01.057.638l-.057.07-4 4a.5.5 0 01-.638.057l-.07-.057-4-4a.5.5 0 010-.708z"></path>
-#                                         </svg>
-#                                     </div>
-#                                 </span>
-#                                 <p style="color:orange;" class="sidebar-item level-2">child-1-id</p>
-#                             </button>
-#                             <ul class="submenu level-2" id="child-1-id_submenu" style="display:none;">
-#                                 <li class="sidebar-item level-3">
-#                                     <p style="color:orange;" class="sidebar-item level-3">sub-child</p>
-#                                 </li>
-#                             </ul>
-#                         </span>
-#                     </li>
-#                     <li class="sidebar-item level-2">
-#                         <p style="color:orange;" class="sidebar-item level-2">child-2-id</p>
-#                     </li>
-#                 </ul>
-#             </span>
-#         </li>
-#     </ul>
-# </div>
