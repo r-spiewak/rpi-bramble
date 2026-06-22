@@ -1,6 +1,6 @@
 ---
 layout: default
-toc: true
+<!-- toc: true -->
 ---
 <div>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -43,9 +43,16 @@ toc: true
         {% comment %}<!-- {{ page.content | markdownify }} -->{% endcomment %}
         {% comment %}
         <!-- This one is from jekyll-toc extension. -->
-        {{ content | inject-anchors | markdownify }}
+        {{ content | inject_anchors | markdownify }}
+        <!-- But it doesn't inject the id attr anchors into the header tags,
+         rather it injects an invisible a ref tag at the beginning
+         of the header text... -->
         {% endcomment %}
+        {% comment %}
+        <!-- The regular form... -->
         {{ content | markdownify }}
+        {% endcomment %}
+        {{ content | add_ids_to_headers | markdownify }}
         {% comment %}
         <!-- This one uses the thing from https://github.com/allejo/jekyll-anchor-headings/blob/master/_includes/anchor_headings.html
          But it added lisnks to the rpevious anchor id,
