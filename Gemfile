@@ -7,3 +7,5 @@ gem "minima" # https://github.com/jekyll/minima
 #     # gem "jekyll-timeago", "~> 0.13.1"
 #     # gem "jekyll-menus"
 # end
+
+gem 'jekyll-toc'

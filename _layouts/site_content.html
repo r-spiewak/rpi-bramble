@@ -1,5 +1,6 @@
 ---
 layout: default
+toc: true
 ---
 <div>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,6 +28,7 @@ layout: default
         }
 
         {% include sidenav.css %}
+        {% include sidetoc.css %}
 
     </style>
 
@@ -39,8 +41,19 @@ layout: default
     <div class="main">
         <p class="page-title">{{ page.title }}</p>
         {% comment %}<!-- {{ page.content | markdownify }} -->{% endcomment %}
+        {% comment %}
+        <!-- This one is from jekyll-toc extension. -->
+        {{ content | inject-anchors | markdownify }}
+        {% endcomment %}
         {{ content | markdownify }}
+        {% comment %}
+        <!-- This one uses the thing from https://github.com/allejo/jekyll-anchor-headings/blob/master/_includes/anchor_headings.html
+         But it added lisnks to the rpevious anchor id,
+         it didn't add id attributes to html header tags that didn't have them. -->
+        {% include anchor_headings.html html=content anchorBody="#" %}
+        {% endcomment %}
     </div>
+    {% include sidetoc.html %}
 
     {% comment %}
     <!-- {% comment %} Block to allow things to be appended in inheriting layouts. {% endcomment %}

@@ -16,12 +16,14 @@ defaults:
       type: "site_content"
     values:
       layout: "site_content"
+      toc: true
   -
     scope:
       path: ""
       type: pages
     values:
       layout: "site_content"
+      toc: true
 
 # Note 1: autosidebar takes precedence over sidebar.
 #         If the autosidebar option is present, it will trigger.
@@ -78,5 +80,6 @@ sidebar:
 
 # permalink: /:categories/:year/:month/:day/:title:output_ext
 
-# plugins:
+plugins:
 # - jekyll-menus
+- jekyll-toc
