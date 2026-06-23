@@ -43,4 +43,24 @@
     }
 }
 
-/* Then get the header id attrs injected into the html header tags. */
+/* Make the ordered list have counters */
+.sidetoc-toc {
+  counter-reset: item;
+  list-style-type: none; /* Disable default numbering so we can inject our own */
+}
+
+.sidetoc-toc ol {
+  counter-reset: item;
+  list-style-type: none;
+}
+
+.sidetoc-toc li::before {
+  content: counters(item, ".") ". ";
+  counter-increment: item;
+}
+
+/* Optional: Prevent the double-digit period if you only want '1.1' instead of '1.1.' */
+/* .sidetoc-toc li li::before {
+  content: counters(item, ".") " ";
+} */
+

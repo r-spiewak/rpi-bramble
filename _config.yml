@@ -76,6 +76,10 @@ sidebar:
           - title: sub-child
       - title: child-2-id
 
+toc:
+  ordered_list: true
+  list_class: sidetoc-toc
+
 # debug: true
 
 # permalink: /:categories/:year/:month/:day/:title:output_ext
