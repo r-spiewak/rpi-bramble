@@ -18,6 +18,10 @@
     | replace_regex: '(?i)^<ol[^>]*>\s*</ol>$', '' 
     | strip 
 %}
+{% capture inner_content_2 %}{{ content_toc | replace_regex: '(?i)^<ul[^>]*>\s*</ul>$', ''  | replace_regex: '(?i)^<ol[^>]*>\s*</ol>$', ''  | strip }}{% endcapture %}
+{% capture inner_content_3 %}{{ content_toc | replace_regex: '^<ul[^>]*>\s*</ul>$', '56'  | replace_regex: '^<ol[^>]*>\s*</ol>$', '45'  | strip }}{% endcapture %}
+{% capture inner_content_4 %}{{ content_toc | regex_replace: '^<ul[^>]*>\s*</ul>$', '56'  | regex_replace: '^<ol[^>]*>\s*</ol>$', '45'  | strip }}{% endcapture %}
+{% capture inner_content_5 %}{{ content_toc | regex_replace: '^<ul[^>]*>\s*</ul>$', ''  | regex_replace: '^<ol[^>]*>\s*</ol>$', ''  | strip }}{% endcapture %}
 {% capture empty_content_toc_ol_example %}<ol id="toc" class="sidetoc-toc"></ol>{% endcapture %}
 {% capture empty_content_toc_ul_example %}<ul id="toc" class="sidetoc-toc"></ul>{% endcapture %}
 {% if site.debug %}
@@ -41,7 +45,19 @@
     <!-- This is a filter to replace spaces with nothing: -->
      | replace: " ", ""
     {% endcomment %}
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'inner_content_2': {{ inner_content_2 }}
+    </div>
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'inner_content_3': {{ inner_content_3 }}
+    </div>
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'inner_content_4': {{ inner_content_4 }}
+    </div>
 {% endif %}
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'inner_content_5': {{ inner_content_5 }}
+    </div>
 {% if content_toc == blank 
     or content_toc == "" 
     or content_toc == nil 
@@ -50,6 +66,7 @@
     or inner_content == ""
     or partially_stripped_content_toc == empty_content_toc_ol_example
     or partially_stripped_content_toc == empty_content_toc_ul_example
+    or inner_conent_5 == ""
 %}
     {% comment %}
     <!-- These checks always return true... -->
