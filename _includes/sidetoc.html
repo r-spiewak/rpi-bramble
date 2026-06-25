@@ -1,4 +1,70 @@
-<div class="sidetoc">
-    {% comment %}{% toc %}{% endcomment %}
-    {{ content | toc_only }}
-</div>
+{% capture content_toc %}{{ content | toc_only }}{% endcapture %}
+{% assign partially_stripped_content_toc = content_toc
+    | strip_newlines
+    | strip
+%}
+{% assign stripped_toc = content_toc
+    | strip_newlines 
+    | remove: "<ul>"
+    | remove: "</ul>"
+    | remove: "<ol>"
+    | remove: "</ol>"
+    | remove: "<li>"
+    | remove: "</li>"
+    | strip 
+%}
+{% assign inner_content = content_toc 
+    | replace_regex: '(?i)^<ul[^>]*>\s*</ul>$', '' 
+    | replace_regex: '(?i)^<ol[^>]*>\s*</ol>$', '' 
+    | strip 
+%}
+{% capture empty_content_toc_ol_example %}<ol id="toc" class="sidetoc-toc"></ol>{% endcapture %}
+{% capture empty_content_toc_ul_example %}<ul id="toc" class="sidetoc-toc"></ul>{% endcapture %}
+{% if site.debug %}
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'stripped_toc': {{ stripped_toc }}
+    </div>
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'inner_content': {{ inner_content }}
+    </div>
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'content_toc': {{ content_toc }}
+    </div>
+    {% comment %}
+    <!-- This is the sequence that comes out of the empty toc: -->
+    <ol id="toc" class="sidetoc-toc"></ol>
+    {% endcomment %}
+    <div style="border: 2px solid green; padding: 10px; margin-left: 140px; margin-right: 140px;">
+        🪲 DEBUG: 'content_toc' is 'empty_content_toc_example': {% if partially_stripped_content_toc == empty_content_toc_ol_example %}True{% else %}False{% endif %}
+    </div>
+    {% comment %}
+    <!-- This is a filter to replace spaces with nothing: -->
+     | replace: " ", ""
+    {% endcomment %}
+{% endif %}
+{% if content_toc == blank 
+    or content_toc == "" 
+    or content_toc == nil 
+    or content_toc == false 
+    or stripped_toc == ""
+    or inner_content == ""
+    or partially_stripped_content_toc == empty_content_toc_ol_example
+    or partially_stripped_content_toc == empty_content_toc_ul_example
+%}
+    {% comment %}
+    <!-- These checks always return true... -->
+     or content_toc | strip_newlines == empty_content_toc_ol_example
+     or content_toc | strip_newlines == empty_content_toc_ul_example
+    {% endcomment %}
+    {% comment %}
+    <!-- It will never be completely blank... 
+     it'll always contain at least 
+      `<ol id="toc" class="sidetoc-toc"></ol>`... -->
+    {% endcomment %}
+{% else %}
+    <div class="sidetoc">
+        {% comment %}{% toc %}{% endcomment %}
+        {% comment %}{{ content | toc_only }}{% endcomment %}
+        {{ content_toc }}
+    </div>
+{% endif %}
