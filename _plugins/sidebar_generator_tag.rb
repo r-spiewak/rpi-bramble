@@ -101,15 +101,17 @@ private
         self.debug_print("SidebarGeneratorTag", "build_sidebar_html", "Node name '#{name}' children data: '#{children}'")
         if children.is_a?(Hash) && !children.empty?
             if level > 0
-                # Make the span for the vertical bar
-                html += "<span class=\"sidebar-item level-#{level} bar\">\n"
                 sidebar_icon = File.read(File.join(Dir.pwd, "_includes", "collapsible_sidebar_icon.html"))
-                html += "<button class=\"sidebar-item-toggle sidebar_item_toggle_level-#{level}\" id=\"\##{name}_submenu\" data-target=\"#{name}_submenu\" aria-expanded=\"false\" onclick=\"toggleAccordion(this)\">\n"
-                html += "    <span class=\"sidebar-icon\">\n"
+                # Make the span for the vertical bar
+                html += "<span class=\"sidebar-item level-#{level} bar-container\">\n"
+                html += "\t<div class=\"sidebar-item level-#{level} bar\"></div>\n"
+                html += "\t<div class=\"sidebar-item level-#{level} bar-content-wrapper\">"
+                html += "\t\t<button class=\"sidebar-item-toggle sidebar_item_toggle_level-#{level}\" id=\"\##{name}_submenu\" data-target=\"#{name}_submenu\" aria-expanded=\"false\" onclick=\"toggleAccordion(this)\">\n"
+                html += "\t\t\t<span class=\"sidebar-icon\">\n"
                 html += sidebar_icon
-                html += "    </span>\n"
+                html += "\t\t\t</span>\n"
                 html += page_html
-                html += "</button>\n"
+                html += "\t\t</button>\n"
                 
             end
             # The key structure is: <ul><li>Key: {__children__: {...}, __page__:{...}}</li></ul>
@@ -131,6 +133,7 @@ private
             
             html += "</ul>\n"
             if level > 0
+                html += "\t</div>\n"
                 html += "</span>\n"
             end
         else
