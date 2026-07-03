@@ -79,7 +79,7 @@
       `<ol id="toc" class="sidetoc-toc"></ol>`... -->
     {% endcomment %}
 {% else %}
-    <div class="sidetoc">
+    <div class="sidetoc", id="sidetoc">
         {% comment %}{% toc %}{% endcomment %}
         {% comment %}{{ content | toc_only }}{% endcomment %}
         {{ content_toc }}
