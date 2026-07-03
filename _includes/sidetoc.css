@@ -18,6 +18,11 @@
     height: 60dvh;       /* Sets height to 57% of the viewport height; calibrated so it never overlaps the footer - this calibration makes no sense and is heavily dependent on the screensize, so instead just set it to a normal number, e.g., 60  */
     overflow-y: auto;
     padding: 8px 0 8px 0;
+
+    min-width: 10px;
+    min-height: 30dvh;
+    resize: both;
+    direction: rtl;  /* Make sure to pair the inner container with ltr */
 }
 
 .sidetoc a {
@@ -47,6 +52,7 @@
 .sidetoc-toc {
   counter-reset: item;
   list-style-type: none; /* Disable default numbering so we can inject our own */
+  direction: ltr;
 }
 
 .sidetoc-toc ol {
