@@ -6,19 +6,21 @@ document.addEventListener('DOMContentLoaded', function() {
     //     // container.scrollLeft = container.scrollWidth;
     //     container.scrollLeft = 0;
     // });
-    container.scrollLeft = container.scrollWidth;
-    // container.scrollLeft = 0;
+    if (container) {
+        container.scrollLeft = container.scrollWidth;
+        // container.scrollLeft = 0;
 
-    container.addEventListener('wheel', function(e) {
-        // Detect if it's a trackpad: small deltaY/deltaX values usually mean trackpad
-        const isTrackpad = Math.abs(e.deltaY) < 50 && Math.abs(e.deltaX) < 50;
+        container.addEventListener('wheel', function(e) {
+            // Detect if it's a trackpad: small deltaY/deltaX values usually mean trackpad
+            const isTrackpad = Math.abs(e.deltaY) < 50 && Math.abs(e.deltaX) < 50;
 
-        // Only reverse horizontal scroll for trackpad events
-        if (isTrackpad && e.deltaX !== 0) {
-            e.preventDefault(); // Stop default scroll
-            // Reverse horizontal scroll direction
-            container.scrollLeft -= e.deltaX;
-        }
-        // Let vertical scroll behave normally
-        }, { passive: false });
+            // Only reverse horizontal scroll for trackpad events
+            if (isTrackpad && e.deltaX !== 0) {
+                e.preventDefault(); // Stop default scroll
+                // Reverse horizontal scroll direction
+                container.scrollLeft -= e.deltaX;
+            }
+            // Let vertical scroll behave normally
+            }, { passive: false });
+    }
 });
