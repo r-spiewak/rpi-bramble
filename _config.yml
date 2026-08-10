@@ -1,5 +1,6 @@
 theme: minima
 title: "Raspberry Pi Bramble Home"
+baseurl: "/rpi-bramble"
 collections:
   site_content:
     output: true
@@ -30,6 +31,9 @@ defaults:
 # favicon_ico: /assets/images/RPiOnQuillOnScroll.ico
 favicon:
   source: ./assets/images/RPiOnQuillOnScroll.svg
+  type: svg
+  # Get it to appear on deployed version
+  # Get it to appear in page headers
 
 # Note 1: autosidebar takes precedence over sidebar.
 #         If the autosidebar option is present, it will trigger.
