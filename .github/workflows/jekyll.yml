@@ -35,6 +35,8 @@ jobs:
     #     jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
     - name: Build site in docker pull ghcr.io/jinnatar/simple-jekyll:4
       uses: docker://ghcr.io/jinnatar/simple-jekyll:4
+    - name: Install ImageMagick
+      run: sudo apt-get install imagemagick
     - name: Setup Ruby
       # uses: ruby/setup-ruby@8575951200e472d5f2d95c625da0c7bec8217c42 # v1.161.0
       # uses: ruby/setup-ruby@086ffb1a2090c870a3f881cc91ea83aa4243d408 # v1.195.0
