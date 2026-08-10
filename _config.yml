@@ -29,7 +29,7 @@ defaults:
 # favicon_png: /assets/images/RPiOnQuillOnScroll.png
 # favicon_ico: /assets/images/RPiOnQuillOnScroll.ico
 favicon:
-  source: /assets/images/RPiOnQuillOnScroll.svg
+  source: ./assets/images/RPiOnQuillOnScroll.svg
 
 # Note 1: autosidebar takes precedence over sidebar.
 #         If the autosidebar option is present, it will trigger.
