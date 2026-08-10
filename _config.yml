@@ -93,3 +93,4 @@ toc:
 plugins:
 # - jekyll-menus
 - jekyll-toc
+- jekyll-favicon
