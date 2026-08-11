@@ -26,14 +26,13 @@ defaults:
       layout: "site_content"
       toc: true
 
-# favicon_svg: /assets/images/RPiOnQuillOnScroll.svg
-# favicon_png: /assets/images/RPiOnQuillOnScroll.png
-# favicon_ico: /assets/images/RPiOnQuillOnScroll.ico
-favicon:
-  source: ./assets/images/RPiOnQuillOnScroll.svg
-  type: svg
-  # Get it to appear on deployed version
-  # Get it to appear in page headers
+favicon_svg: assets/images/RPiOnQuillOnScroll.svg
+favicon_png: assets/images/RPiOnQuillOnScroll.png
+favicon_ico: assets/images/RPiOnQuillOnScroll.ico
+# favicon:
+#   source: /assets/images/RPiOnQuillOnScroll.svg
+#   dest: /assets/images/
+#   type: svg
 
 # Note 1: autosidebar takes precedence over sidebar.
 #         If the autosidebar option is present, it will trigger.
@@ -97,4 +96,4 @@ toc:
 plugins:
 # - jekyll-menus
 - jekyll-toc
-- jekyll-favicon
+# - jekyll-favicon

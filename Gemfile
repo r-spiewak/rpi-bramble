@@ -7,7 +7,7 @@ group :jekyll_plugins do
 #     # gem "jekyll-timeago", "~> 0.13.1"
 #     # gem "jekyll-menus"
     gem "jekyll-regex-replace"
-    gem "jekyll-favicon", "~> 1.1.0"
+#     # gem "jekyll-favicon", "~> 1.1.0"
 end
 
 gem 'jekyll-toc'
