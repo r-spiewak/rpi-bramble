@@ -4,6 +4,8 @@ layout: default
 ---
 <div>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% comment %}<!-- This will make the image appear in the main page content, not the title bar... -->{% endcomment %}
+    <!-- <img src="{{ site.favicon_svg | absolute_url }}" alt="Site Icon"> -->
     <title>{{ page.title | default: site.title }}</title>
     <!-- SVG Favicon -->
     <!-- <link rel="icon" href="{{ '/assets/images/RPiOnQuillOnScroll.svg' | relative_url }}" type="image/svg+xml"> -->
