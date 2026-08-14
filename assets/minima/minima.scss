@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+@forward "variables";
+
+// @use "minima/base";
+@use "base";
+@use "layout";
+@use "syntax-highlighting";
+
+// Import partials.
+/* @import
+  "minima/base",
+  "minima/layout",
+  "minima/syntax-highlighting"
+;
+*/
+// @use rules must be written before any other rules,
+// So these are moved to the top of the file.
